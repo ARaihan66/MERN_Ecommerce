@@ -20,7 +20,7 @@ exports.createProduct = async (req, res, next) => {
 //get all product
 exports.getAllProducts = async (req, res) => {
     try {
-        const feature = new Features(Product.find(), req.query).search();
+        const feature = new Features(Product.find(), req.query).search().filter();
         const products = await Features.query;
 
         res.status(200).json({

@@ -24,7 +24,9 @@ class Features {
         //removing some field
         const removeFields = ['keyword', 'page', 'limit'];
 
-        removeFields.forEach((key) => delete queryCopy[key])
+        removeFields.forEach((key) => delete queryCopy[key]);
+        this.query = this.query.find(queryCopy);
+        return this;
     }
 }
 
