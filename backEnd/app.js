@@ -11,7 +11,7 @@ app.get("/", (req, res) => {
     res.send("Hello This is home page")
 })
 
-app.use('/api/v2', product);
+app.use('/api', product);
 
 
 module.exports = app;

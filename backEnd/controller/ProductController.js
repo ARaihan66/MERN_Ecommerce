@@ -1,4 +1,5 @@
-const Product = require("../models/ProductModel");
+const Product = require("../models/ProductModel.js");
+const Features = require("../Feature/Feature.js")
 
 
 //create product
@@ -19,10 +20,12 @@ exports.createProduct = async (req, res, next) => {
 //get all product
 exports.getAllProducts = async (req, res) => {
     try {
-        const products = await Product.find();
+        const feature = new Features(Product.find(), req.query).search();
+        const products = await Features.query;
 
         res.status(200).json({
-            product: products
+            success: true,
+            products
         })
     } catch (err) {
         res.status(500).json({
