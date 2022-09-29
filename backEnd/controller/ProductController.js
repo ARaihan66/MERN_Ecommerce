@@ -20,7 +20,9 @@ exports.createProduct = async (req, res, next) => {
 //get all product
 exports.getAllProducts = async (req, res) => {
     try {
-        const feature = new Features(Product.find(), req.query).search().filter();
+        const resultPerPage = 8;
+        const productCount = await Product.countDocuments();
+        const feature = new Features(Product.find(), req.query).search().filter().pagination(resultPerPage);
         const products = await Features.query;
 
         res.status(200).json({
@@ -90,7 +92,8 @@ exports.getSingleProduct = async (req, res) => {
         }
 
         res.status(200).json({
-            product: product
+            product: product,
+            productCount
         })
     } catch (err) {
         res.status(500).json({
