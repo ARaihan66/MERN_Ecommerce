@@ -5,7 +5,7 @@ const productSchema = Schema({
         type: String,
         required: [true, "Please Enter Product Name"],
         trim: true,
-        maxLength: 20
+        maxLength: [20, "Maximum Lenght is Twenty"]
     },
 
     description: {

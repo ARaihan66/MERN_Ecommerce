@@ -6,12 +6,11 @@ app.use(express.json());
 
 //import route
 const product = require('./route/ProductRoute');
+const user = require('./route/UserRoute.js')
 
-app.get("/", (req, res) => {
-    res.send("Hello This is home page")
-})
 
 app.use('/api', product);
+app.use('/api', user);
 
 
 module.exports = app;
