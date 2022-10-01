@@ -1,5 +1,5 @@
-
 const User = require('../models/UserModel.js');
+const sendToken = require('../Feature/jwtToken');
 
 
 //regisrer user
@@ -19,11 +19,7 @@ exports.createUser = async (req, res, next) => {
         }
     })
 
-    const token = user.getJwtToken();
-    res.status(200).json({
-        message: "Successfully Send!!",
-        token: token
-    })
+    sendToken(user, 200, res);
 }
 
 
@@ -40,7 +36,6 @@ exports.userLogin = async (req, res) => {
         res.status(200).send("User Not Found!!!");
     }
 
-    const token = user.getJwtToken();
     const isPasswordMatched = user.comparePassword(password);
 
 
@@ -48,9 +43,18 @@ exports.userLogin = async (req, res) => {
         return res.send("Password Incorrect!!!");
     }
 
-    res.status(200).json({
-        message: 'Login Successfull',
-        token: token
-    })
+    sendToken(user, 201, res);
 
 }
+
+//user log out
+exports.userLogout = async (req, res, next) => {
+    res.cookie("token", null, {
+        expires: new Date(Date.now()),
+        httpOnly: true,
+    });
+
+    res.status(200).json({
+        message: "Log out success",
+    });
+};
