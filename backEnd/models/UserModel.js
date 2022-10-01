@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 const validator = require("validator");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 
@@ -47,7 +47,8 @@ const userSchema = Schema({
 
 //hash password
 userSchema.pre("save", async function (next) {
-    this.password = await bcrypt.hash(this.password, 10);
+    let salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, parseInt(salt));
 });
 
 // jwt token
@@ -57,10 +58,13 @@ userSchema.methods.getJwtToken = function () {
     });
 };
 
-// //compare password
-// userSchema.methods.comparePassword = async function (givenPassword) {
-//     return await bcrypt.compare(givenPassword, this.password)
-// }
+//compare password
+userSchema.methods.comparePassword = async function (givenPassword) {
+    return await bcrypt.compare(givenPassword, this.password, (err, res) => {
+        // res == true or res == false
+        console.log(res);
+    });
+}
 
 module.exports = model("User", userSchema);
 
