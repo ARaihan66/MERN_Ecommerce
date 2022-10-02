@@ -7,12 +7,14 @@ exports.createUser = async (req, res, next) => {
     const { name, email, password } = req.body;
     let user = await User.findOne({ email: email });
     if (user) {
-        return res.send("User Already Registered!!!");
+        return res.json({
+            message: "User Already Registered!!!"
+        });
     }
     user = await User.create({
-        name,
-        email,
-        password,
+        name: name,
+        email: email,
+        password: password,
         avatar: {
             public_id: 'https://test.com',
             url: 'https://test.com'
@@ -44,7 +46,6 @@ exports.userLogin = async (req, res) => {
     }
 
     sendToken(user, 201, res);
-
 }
 
 //user log out
