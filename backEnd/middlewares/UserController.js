@@ -1,8 +1,8 @@
 const User = require('../models/UserModel.js');
 const sendToken = require('../Feature/jwtToken');
+const sendMail = require('../Feature/sendMail');
 
-
-//regisrer user
+//User Registration
 exports.createUser = async (req, res, next) => {
     const { name, email, password } = req.body;
     let user = await User.findOne({ email: email });
@@ -25,7 +25,7 @@ exports.createUser = async (req, res, next) => {
 }
 
 
-//user login
+//User Login
 exports.userLogin = async (req, res) => {
     const { email, password } = req.body;
 
@@ -48,7 +48,7 @@ exports.userLogin = async (req, res) => {
     sendToken(user, 201, res);
 }
 
-//user log out
+//User Logout
 exports.userLogout = async (req, res, next) => {
     res.cookie("token", null, {
         expires: new Date(Date.now()),
@@ -59,3 +59,46 @@ exports.userLogout = async (req, res, next) => {
         message: "Log out success",
     });
 };
+
+// Forgot Password
+exports.forgorPassword = async (req, res, next) => {
+    const user = await User.findOne({ email: req.body.email });
+
+    if (!user) {
+        return res.status(400).json({
+            message: "User not found"
+        })
+    }
+    //Get Reset Password Token
+    const resetToken = user.getResetToken();
+
+    await user.save({
+        validateBeforeSave: false
+    })
+
+    const resetPasswordUrl = `{req.protocol}://${req.get("host")}/password/reset/${resetToken}`;
+    const message = `Your Password Reset Token is :  ${resetPasswordUrl}`;
+
+    try {
+
+        await sendMail({
+            email: user.email,
+            subject: `Password Recovery`,
+            message
+        })
+
+        res.status(200).json({
+            message: `Email sent to ${user.email} successfully`
+        })
+
+    } catch (error) {
+        user.resetPasswordToken = undefined;
+        user.resetPasswordTime = undefined;
+
+        await user.save({
+            validateBeforeSave: false
+        })
+
+        return res.send("")
+    }
+}

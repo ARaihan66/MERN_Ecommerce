@@ -3,9 +3,16 @@ const { getAllProducts, createProduct, updateProduct, deleteProduct, getSinglePr
 const { authentication, authorizeRole } = require('../middlewares/Authentication');
 const router = express.Router();
 
-router.route('/products').get(getAllProducts);
-router.route('/product/new').post(authentication, authorizeRole("admin"), createProduct);
-router.route('/product/:id').put(updateProduct).delete(deleteProduct).get(getSingleProduct);
+router.route('/products')
+    .get(getAllProducts);
+
+router.route('/product/new')
+    .post(authentication, authorizeRole("admin"), createProduct);
+
+router.route('/product/:id')
+    .put(authentication, authorizeRole("admin"), updateProduct)
+    .delete(authentication, authorizeRole("admin"), deleteProduct)
+    .get(getSingleProduct);
 
 module.exports = router;
 

@@ -65,5 +65,16 @@ userSchema.methods.comparePassword = async function (givenPassword) {
     });
 }
 
+//forgot password
+userSchema.methods.getResetToken = function () {
+    // Generate token
+    const resetToken = crypto.randomBytes(20).toString("hex");
+
+    // Hash token and set to resetPasswordToken field
+    this.resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+
+    this.resetPasswordTime = Date.now() + 15 * 60 * 3000;
+}
+
 module.exports = model("User", userSchema);
 
