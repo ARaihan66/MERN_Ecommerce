@@ -1,6 +1,7 @@
 const User = require('../models/UserModel.js');
 const sendToken = require('../Feature/jwtToken');
 const sendMail = require('../Feature/sendMail');
+const crypto = require("crypto");
 
 //User Registration
 exports.createUser = async (req, res, next) => {
@@ -107,6 +108,7 @@ exports.forgorPassword = async (req, res, next) => {
         return res.send(`Email is not sent to "${user.email}"`);
     }
 }
+
 
 //Reset Password
 exports.resetPassword = async (req, res, next) => {
