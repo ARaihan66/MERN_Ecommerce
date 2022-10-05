@@ -25,6 +25,7 @@ exports.createUser = async (req, res, next) => {
 }
 
 
+
 //User Login
 exports.userLogin = async (req, res) => {
     const { email, password } = req.body;
@@ -48,6 +49,8 @@ exports.userLogin = async (req, res) => {
     sendToken(user, 201, res);
 }
 
+
+
 //User Logout
 exports.userLogout = async (req, res, next) => {
     res.cookie("token", null, {
@@ -59,6 +62,8 @@ exports.userLogout = async (req, res, next) => {
         message: "Log out success",
     });
 };
+
+
 
 // Forgot Password
 exports.forgorPassword = async (req, res, next) => {
@@ -84,7 +89,7 @@ exports.forgorPassword = async (req, res, next) => {
         await sendMail({
             email: user.email,
             subject: `Password Recovery`,
-            message
+            message: message
         })
 
         res.status(200).json({
@@ -99,6 +104,31 @@ exports.forgorPassword = async (req, res, next) => {
             validateBeforeSave: false
         })
 
-        return res.send("")
+        return res.send(`Email is not sent to "${user.email}"`);
     }
+}
+
+//Reset Password
+exports.resetPassword = async (req, res, next) => {
+    const resetPasswordToken = crypto.createHash("sha256").update(req.params.token).digest("hex");
+
+    const user = await User.findOne({
+        resetPasswordToken,
+        resetPasswordTime: { $gt: Date.now() }
+    })
+
+    if (!user) {
+        res.send("User not found!!")
+    }
+
+    if (req.body.password !== req.body.confirmPassword) {
+        res.send("Password is not matched!!")
+    }
+
+    user.password = req.body.password;
+
+    user.resetPasswordToken = undefined;
+    user.resetPasswordTime = undefined;
+
+    await user.save();
 }
