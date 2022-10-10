@@ -2,6 +2,7 @@ const User = require('../models/UserModel.js');
 const sendToken = require('../Feature/jwtToken');
 const sendMail = require('../Feature/sendMail');
 const crypto = require("crypto");
+const { findById } = require('../models/UserModel.js');
 
 //User Registration
 exports.createUser = async (req, res, next) => {
@@ -137,11 +138,12 @@ exports.resetPassword = async (req, res, next) => {
 
 
 // User profile details
-exports.userDtails = async (req, res, next) => {
-    const user = await User.findById(req.body.id);
+exports.userDetails = async (req, res) => {
+    const user = await User.findById(req.user.id);
 
     res.status(200).json({
         message: "Successfully get profile information",
         user: user
     })
 }
+
