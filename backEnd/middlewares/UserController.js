@@ -147,3 +147,27 @@ exports.userDetails = async (req, res) => {
     })
 }
 
+//Update user password
+exports.updatePassword = async (req, res, next) => {
+    const user = await User.findById(req.user.id);
+
+    const isPasswordMatched = user.comparePassword(req.body.oldPassword);
+
+    if (!isPasswordMatched) {
+        return res.status(401).json({
+            message: "Password is not matched!!"
+        })
+    }
+
+    if (req.body.newPassword !== req.body.confirmPassword) {
+        return res.status(401).json({
+            message: " Password is not matched with confirm password"
+        })
+    }
+
+    user.password = req.body.newPassword;
+
+    await user.save();
+
+    sendToken(user, 200, res);
+}
