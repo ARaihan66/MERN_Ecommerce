@@ -20,7 +20,8 @@ const userSchema = Schema({
     password: {
         type: String,
         required: [true, "Please Enter Your Password"],
-        minlength: [8, 'Password Max Lenght Will 8 Characters'],
+        minlength: [4, 'Password Minimum Length Will 4 Characters'],
+        maxlength: [8, 'Password Maximum Length Will 8 Characters'],
         select: false,
     },
     avatar: {
@@ -53,6 +54,8 @@ userSchema.pre("save", async function (next) {
     let salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, parseInt(salt));
 });
+
+
 
 // jwt token
 userSchema.methods.getJwtToken = function () {
