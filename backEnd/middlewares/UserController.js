@@ -192,12 +192,28 @@ exports.updateProfile = async (req, res, next) => {
 }
 
 
-// Get all user 
+// Get all user ------Admin
 exports.getAllUser = async (req, res, next) => {
     users = await User.find();
 
     res.status(200).json({
         message: "Successfully get all user data",
         users: users
+    })
+}
+
+//Get single user details  ----Admin
+exports.getSingleUser = async (req, res, next) => {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+        return res.status(400).json({
+            message: 'User not found',
+        })
+    }
+
+    res.status(200).json({
+        message: "Successful",
+        user: user
     })
 }
