@@ -21,7 +21,7 @@ router.route('/password/reset/:token').put(resetPassword)
 router.route('/me').get(authentication, userDetails)
 router.route('/me/password/update').put(authentication, updatePassword)
 router.route('/me/profile/update').put(authentication, updateProfile)
-
+router.route('/all/users').get(authentication, getAllUser)
 
 
 module.exports = router;

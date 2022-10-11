@@ -191,3 +191,13 @@ exports.updateProfile = async (req, res, next) => {
     })
 }
 
+
+// Get all user 
+exports.getAllUser = async (req, res, next) => {
+    users = await User.find();
+
+    res.status(200).json({
+        message: "Successfully get all user data",
+        users: users
+    })
+}
