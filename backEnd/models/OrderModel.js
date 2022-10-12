@@ -19,8 +19,7 @@ const orderSchema = Schema({
             required: true,
         },
         pinCode: {
-            type: Number,
-            required: true,
+            type: Number
         },
         phoneNo: {
             type: Number,
@@ -60,11 +59,11 @@ const orderSchema = Schema({
     paymentInfo: {
         id: {
             type: String,
-            required: true,
+            //required: true,
         },
         status: {
             type: String,
-            required: true,
+            //required: true,
         },
     },
     paidAt: {
