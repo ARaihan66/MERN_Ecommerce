@@ -1,7 +1,6 @@
 const Cart = require("../models/CartModel");
 
-// Add to wishlist
-// add To Cart
+// Add To Cart
 exports.addToCart = async (req, res, next) => {
     const {
         productName,
@@ -28,7 +27,16 @@ exports.addToCart = async (req, res, next) => {
     });
 };
 
-// Update Cart
+// Get Cart Item
+exports.getCartItem = async (req, res, next) => {
+    const cartItem = await Cart.find({ userId: req.user.id });
+    res.status(200).json({
+        success: true,
+        cartItem,
+    });
+};
+
+// Update Cart Item
 exports.updateCart = async (req, res, next) => {
     const {
         quantity,
@@ -46,6 +54,7 @@ exports.updateCart = async (req, res, next) => {
         quantity,
     });
 };
+
 
 // Remove Cart Item
 exports.removeCartItem = async (req, res, next) => {
