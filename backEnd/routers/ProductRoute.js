@@ -8,7 +8,7 @@ const {
     createProductReview,
     getSingleProductReviews,
     deleteReview
-} = require('../middlewares/ProductController.js');
+} = require('../controllers/ProductController.js');
 const { authentication, authorizeRole } = require('../Authentication/Authentication.js');
 const router = express.Router();
 

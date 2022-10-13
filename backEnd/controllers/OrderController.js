@@ -84,3 +84,67 @@ exports.getAdminAllOrder = async (req, res, next) => {
         orders
     })
 }
+
+// Update Order Status ---Admin
+exports.updateAdminOrder = async (req, res, next) => {
+
+    const order = await Order.findById(req.params.id);
+
+    if (!order) {
+        return res.status(404).json({
+            success: false,
+            message: "Order Not Found"
+
+        });
+    }
+
+    if (order.orderStatus === "Delivered") {
+        return res.status(400).json({
+            success: false,
+            message: "You have already delivered this order"
+
+        });
+    }
+
+    if (req.body.status === "Shipped") {
+        order.orderItems.forEach(async (o) => {
+            await updateStock(o.product, o.quantity);
+        });
+    }
+    order.orderStatus = req.body.status;
+
+    if (req.body.status === "Delivered") {
+        order.deliveredAt = Date.now();
+    }
+
+    await order.save({ validateBeforeSave: false });
+    res.status(200).json({
+        success: true,
+    });
+};
+
+async function updateStock(id, quantity) {
+
+    const product = await Product.findById(id);
+
+    product.Stock -= quantity;
+
+    await product.save({ validateBeforeSave: false });
+}
+
+
+// Delete Order ---Admin
+exports.deleteOrder = async (req, res, next) => {
+
+    const order = await Order.findById(req.params.id);
+
+    if (!order) {
+        return next(new ErrorHandler("Order not found with this Id", 404));
+    }
+
+    await order.remove();
+
+    res.status(200).json({
+        success: true,
+    });
+};

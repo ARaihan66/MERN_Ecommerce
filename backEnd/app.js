@@ -3,9 +3,9 @@ const cookieParser = require('cookie-parser');
 const app = express();
 
 //Import Route
-const product = require('./route/ProductRoute');
-const user = require('./route/UserRoute.js')
-const order = require('./route/OrderRouter.js')
+const product = require('./routers/ProductRoute');
+const user = require('./routers/UserRoute.js')
+const order = require('./routers/OrderRouter.js')
 
 
 

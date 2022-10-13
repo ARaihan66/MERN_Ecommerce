@@ -11,7 +11,7 @@ const {
     updateProfile,
     getAllUser,
     getSingleUser
-} = require('../middlewares/UserController.js');
+} = require('../controllers/UserController.js');
 const router = express.Router();
 
 router.route('/registration').post(createUser);
