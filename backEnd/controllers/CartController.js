@@ -36,10 +36,34 @@ exports.updateCart = async (req, res, next) => {
     const cart = await Cart.findByIdAndUpdate(req.params.id);
 
     if (!cart) {
-        return next(new ErrorHandler("No cart found with this id", 404));
+        return res.status(404).json({
+            success: false,
+            message: "No Cart Item Is Found With This Id"
+        });
     }
 
     await cart.update({
         quantity,
     });
 };
+
+// Remove Cart Item
+exports.removeCartItem = async (req, res, next) => {
+    const cartItem = await Cart.findById(req.params.id);
+
+    if (!cartItem) {
+        return res.status(404).json({
+            success: false,
+            message: "No cart item is found with this id"
+        });
+    }
+
+    await cartItem.remove();
+
+    res.status(200).json({
+        success: true,
+        message: "Item removed from cart",
+    });
+};
+
+
