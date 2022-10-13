@@ -1,6 +1,7 @@
 const Cart = require("../models/CartModel");
 
 // Add to wishlist
+// add To Cart
 exports.addToCart = async (req, res, next) => {
     const {
         productName,
@@ -11,7 +12,7 @@ exports.addToCart = async (req, res, next) => {
         productId,
         Stock,
     } = req.body;
-    const cartList = await Wishlist.create({
+    const cart = await Cart.create({
         productName,
         quantity,
         productImage,
@@ -23,6 +24,22 @@ exports.addToCart = async (req, res, next) => {
 
     res.status(200).json({
         success: true,
-        cartList,
+        cart,
+    });
+};
+
+// Update Cart
+exports.updateCart = async (req, res, next) => {
+    const {
+        quantity,
+    } = req.body;
+    const cart = await Cart.findByIdAndUpdate(req.params.id);
+
+    if (!cart) {
+        return next(new ErrorHandler("No cart found with this id", 404));
+    }
+
+    await cart.update({
+        quantity,
     });
 };
