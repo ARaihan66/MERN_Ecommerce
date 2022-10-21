@@ -1,4 +1,4 @@
-const User = require("../models/UserModel.js")
+const User = require("../models/UserModel.js");
 const jwt = require('jsonwebtoken');
 
 
@@ -6,7 +6,7 @@ exports.authentication = async (req, res, next) => {
     const { token } = req.cookies;
 
     if (!token) {
-        res.status(400).json({
+        return res.status(400).json({
             message: "Please Login First!!!"
         })
     }

@@ -14,9 +14,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 
-app.use('/api', product);
-app.use('/api', user);
-app.use('/api', order);
-app.use('/api', cart);
+app.use('/api/user', user);
+app.use('/api/product', product);
+app.use('/api/order', order);
+app.use('/api/cart', cart);
 
 module.exports = app;

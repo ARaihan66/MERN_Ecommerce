@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const crypto = require("crypto");
+
 
 const userSchema = Schema({
     name: {
@@ -36,14 +36,19 @@ const userSchema = Schema({
     },
     role: {
         type: String,
+        enum: ['user', 'admin'],
         default: "user",
     },
     createdAt: {
         type: Date,
         default: Date.now(),
     },
-    resetPasswordToken: String,
-    resetPasswordTime: Date,
+
+    token: {
+        type: String,
+        default: ''
+    }
+
 });
 
 //hash password
@@ -71,16 +76,6 @@ userSchema.methods.comparePassword = async function (givenPassword) {
     });
 }
 
-//forgot password
-userSchema.methods.getResetToken = function () {
-    // Generate token
-    const resetToken = crypto.randomBytes(20).toString("hex");
-
-    // Hash token and set to resetPasswordToken field
-    this.resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex");
-
-    this.resetPasswordTime = Date.now() + 15 * 60 * 3000;
-}
 
 module.exports = model("User", userSchema);
 

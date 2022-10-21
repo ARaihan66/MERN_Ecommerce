@@ -6,7 +6,7 @@ router.route('/addToCart')
     .post(addToCart)
 
 router.route('/items')
-    .put(getCartItem)
+    .get(getCartItem)
 
 router.route('/add/update')
     .put(updateCart)

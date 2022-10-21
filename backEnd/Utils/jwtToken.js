@@ -10,8 +10,8 @@ const sendToken = (user, statusCode, res) => {
         httpOnly: true
     }).json({
         message: "Successful",
-        user,
-        token
+        User: user,
+        Token: token
     });
 }
 

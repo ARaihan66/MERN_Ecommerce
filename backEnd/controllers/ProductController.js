@@ -1,5 +1,5 @@
 const Product = require("../models/ProductModel.js");
-const Features = require("../Feature/Feature.js")
+const Features = require("../Utils/Feature.js")
 
 
 //create product
