@@ -1,9 +1,9 @@
 const express = require('express');
 const {
-    getAllProducts,
     createProduct,
     updateProduct,
     deleteProduct,
+    getAllProducts,
     getSingleProduct,
     createProductReview,
     getSingleProductReviews,
@@ -12,7 +12,7 @@ const {
 const { authentication, authorizeRole } = require('../Authentication/Authentication.js');
 const router = express.Router();
 
-router.route('/product/new')
+router.route('/create/product')
     .post(authentication, authorizeRole("admin"), createProduct);
 
 router.route('/products')
@@ -23,10 +23,10 @@ router.route('/product/:id')
     .delete(authentication, authorizeRole("admin"), deleteProduct)
     .get(getSingleProduct);
 
-router.route('/product/review')
+router.route('/create/product/review')
     .post(authentication, createProductReview);
 
-router.route('/reviews')
+router.route('/single/reviews')
     .get(getSingleProductReviews);
 
 router.route('/review/delete')

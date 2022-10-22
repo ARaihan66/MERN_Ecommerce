@@ -2,106 +2,83 @@ const Product = require("../models/ProductModel.js");
 const Features = require("../Utils/Feature.js")
 
 
-//create product
+//Create product
 exports.createProduct = async (req, res, next) => {
-    try {
-        const product = await Product.create(req.body);
-        res.status(201).json({
-            success: true,
-            product: product
-        })
-    } catch (err) {
-        res.status(500).json({
-            message: err.message
-        })
-    }
+    const product = await Product.create(req.body);
+    res.status(201).json({
+        success: true,
+        product: product
+    })
 }
 
-//get all product
+//Get all product
 exports.getAllProducts = async (req, res) => {
+    const resultPerPage = 8;
+    const productCount = await Product.countDocuments();
+    const feature = new Features(Product.find(), req.query).search().filter().pagination(resultPerPage);
+    const products = await Features.query;
 
-    try {
-        const resultPerPage = 8;
-        const productCount = await Product.countDocuments();
-        const feature = new Features(Product.find(), req.query).search().filter().pagination(resultPerPage);
-        const products = await Features.query;
-
-        res.status(200).json({
-            success: true,
-            products: products
-        })
-    } catch (err) {
-        res.status(500).json({
-            message: err.message
-        })
-    }
+    res.status(200).json({
+        success: true,
+        products: products
+    })
 }
 
-//update product
+//Update product
 exports.updateProduct = async (req, res) => {
-    try {
-        let product = await Product.findById(req.param.id);
+    let product = await Product.findById(req.param.id);
 
-        if (!product) {
-            return res.status(500).json({
-                mwssage: 'Product not found'
-            })
-        }
-        product = await Product.findByIdAndUpdate(req.param.id, req.body);
-        res.status(200).json({
-            product: product
-        })
-    } catch (err) {
-        res.status(500).json({
-            message: err.message
+    if (!product) {
+        return res.status(500).json({
+            success: false,
+            message: 'Product not found this id'
         })
     }
+    product = await Product.findByIdAndUpdate(req.param.id, req.body);
+    res.status(200).json({
+        success: true,
+        product: product
+    })
 }
 
-//delete products
+//Delete products
 exports.deleteProduct = async (req, res) => {
-    try {
-        let product = await Product.findById(req.param.id);
 
-        if (!product) {
-            return res.status(500).json({
-                mwssage: 'Product not found'
-            })
-        }
-        //await Product.remove();
-        product = await Product.findByIdAndDelete(req.param.id);
-        res.status(200).json({
-            product: product
-        })
-    } catch (err) {
-        res.status(500).json({
-            message: err.message
+    let product = await Product.findById(req.param.id);
+
+    if (!product) {
+        return res.status(500).json({
+            success: false,
+            message: 'Product not found with this id'
         })
     }
+
+    product = await Product.findByIdAndDelete(req.param.id);
+    res.status(200).json({
+        success: true,
+        message: "Product was deleted successfully",
+        product: product
+    })
 }
 
 
-//single product details
+//Get single product details
 exports.getSingleProduct = async (req, res) => {
-    try {
-        let product = await Product.findById(req.param.id);
+    let product = await Product.findById(req.param.id);
 
-        if (!product) {
-            return res.status(500).json({
-                mwssage: 'Product not found'
-            })
-        }
-
-        res.status(200).json({
-            product: product,
-            productCount
-        })
-    } catch (err) {
-        res.status(500).json({
-            message: err.message
+    if (!product) {
+        return res.status(500).json({
+            mwssage: 'Product not found with this id'
         })
     }
+
+    res.status(200).json({
+        success: true,
+        product: product
+    })
+
 }
+
 
 //Create new review or update the review
 exports.createProductReview = async (req, res, next) => {
@@ -142,12 +119,13 @@ exports.createProductReview = async (req, res, next) => {
 
     res.status(200).json({
         success: true,
+        Product: product
     });
 };
 
 // Get all reviews of a single product
 exports.getSingleProductReviews = async (req, res) => {
-    const product = await Product.findById(req.query.id);
+    const product = await Product.findById(req.params.productId);
 
     if (!product) {
         return res.status(404).json({
@@ -162,37 +140,38 @@ exports.getSingleProductReviews = async (req, res) => {
 }
 
 // Delete review --Admin
-exports.deleteReview = async (req, res, next) => {
-    const product = await Product.findById(req.query.productId);
+exports.deleteReview = async (req, res) => {
+    const product = await Product.findById(req.params.productId);
 
     if (!product) {
         return res.status(404).json({
+            success: false,
             message: "Product not found"
         });
     }
 
-    const reviews = product.reviews.filter(
-        (rev) => rev._id.toString() !== req.query.id.toString()
-    );
+    // const reviews = product.reviews.filter(
+    //     (rev) => rev._id.toString() !== req.params.id.toString()
+    // );
 
-    let avg = 0;
+    // let avg = 0;
 
-    reviews.forEach((rev) => {
-        avg += rev.rating;
-    });
+    // reviews.forEach((rev) => {
+    //     avg += rev.rating;
+    // });
 
-    let ratings = 0;
+    // let ratings = 0;
 
-    if (reviews.length === 0) {
-        ratings = 0;
-    } else {
-        ratings = avg / reviews.length;
-    }
+    // if (reviews.length === 0) {
+    //     ratings = 0;
+    // } else {
+    //     ratings = avg / reviews.length;
+    // }
 
-    const numOfReviews = reviews.length;
+    // const numOfReviews = reviews.length;
 
     await Product.findByIdAndUpdate(
-        req.query.productId,
+        req.params.productId,
         {
             reviews,
             ratings,
