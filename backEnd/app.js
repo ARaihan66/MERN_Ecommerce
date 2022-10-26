@@ -1,5 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const errorHandler = require("./ErrorHandler/errorHandler");
 const app = express();
 
 //Import Route
@@ -18,5 +19,7 @@ app.use('/api/user', user);
 app.use('/api/product', product);
 app.use('/api/order', order);
 app.use('/api/cart', cart);
+
+app.use(errorHandler);
 
 module.exports = app;
