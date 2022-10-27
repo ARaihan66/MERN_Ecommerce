@@ -1,5 +1,4 @@
 const Product = require("../models/ProductModel.js");
-const Features = require("../Utils/Feature.js")
 
 
 //Create product
@@ -13,10 +12,8 @@ exports.createProduct = async (req, res, next) => {
 
 //Get all product
 exports.getAllProducts = async (req, res) => {
-    const resultPerPage = 8;
-    const productCount = await Product.countDocuments();
-    const feature = new Features(Product.find(), req.query).search().filter().pagination(resultPerPage);
-    const products = await Features.query;
+
+
 
     res.status(200).json({
         success: true,
