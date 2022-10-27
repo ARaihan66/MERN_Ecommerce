@@ -84,6 +84,7 @@ exports.createUser = async (req, res, next) => {
             message: "Password doesn't mathch!!!"
         });
     }
+
     const user = await User.create({
         otp: otp,
         name: name,
@@ -95,7 +96,12 @@ exports.createUser = async (req, res, next) => {
         }
     })
 
-    sendToken(user, 200, res);
+    // sendToken(user, 200, res);
+
+    res.status(200).json({
+        success: true,
+        User: user
+    })
 }
 
 
@@ -221,43 +227,62 @@ exports.updatePassword = async (req, res, next) => {
 
 }
 
-// Forget password
+// Forget Password Sending OTP
 exports.forgetPassword = async (req, res) => {
     const { email } = req.body;
-    let userData = await User.findOne({ email });
-    if (!userData) {
-        return res.status(400).json({
-            success: false,
-            message: "User is not found with this email !!"
-        })
-    }
 
-    const tempToken = randomstring.generate();
+    const OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
 
-    const user = await User.updateOne({ email }, { $set: { token: tempToken } });
-    sendMail(userData.name, userData.email, tempToken);
+    const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false, // true for 465, false for other ports
+        requireTLS: true,
+        auth: {
+            user: process.env.EMAIL, // generated ethereal user
+            pass: process.env.PASSWORD, // generated ethereal password
+        },
+    });
 
-    res.status(400).json({
-        success: true,
-        message: "Please check your mail and reset password !!"
+    await transporter.sendMail({
+        from: process.env.EMAIL, // sender address
+        to: email, // list of receivers
+        subject: "OTP Code For Validation", // Subject line
+        text: OTP, // plain text body
+    }, (error, data) => {
+        if (error) {
+            console.log(error.message)
+        }
+        else {
+            console.log("Mail has seccessfully sent", data.response)
+        }
     })
 
+    await Otp.updateOne({ email: email }, {
+        $set: {
+            otp: OTP
+        }
+    }, { new: true })
+
+    res.status(200).json({
+        success: true,
+        OTP: OTP
+    })
 }
+
 
 
 // Reset password
 exports.resetPassword = async (req, res) => {
-    const token = req.query.token;
+    const { otp, password, confirmPassword } = req.body;
 
-    const tokenData = await User.findOne({ token: token });
-    if (!tokenData) {
+    const otpUser = await Otp.findOne({ otp: otp });
+    if (!otpUser) {
         return res.status(400).json({
             seccess: false,
-            message: "User is not found with this mail !!"
+            message: "User is not found !!"
         })
     }
-
-    const { password, confirmPassword } = req.body;
 
     if (password !== confirmPassword) {
         return res.status(400).json({
@@ -268,13 +293,24 @@ exports.resetPassword = async (req, res) => {
 
     const hashPassword = await bcrypt.hash(password, 10);
 
-    const user = await User.findByIdAndUpdate({ _id: tokenData._id }, { $set: { password: hashPassword, randomToken: '' } }, { new: true });
-
-    res.status(200).json({
-        success: true,
-        message: "Password is successfully reseted !!",
-        User: user
-    })
+    if (otp == otpUser.otp) {
+        user = await User.updateOne({ email: otpUser.email }, {
+            $set: {
+                otp: otp,
+                password: hashPassword,
+            }
+        }, { new: true })
+        res.status(200).json({
+            success: true,
+            message: `Password: ${hashPassword}`
+        })
+    }
+    else {
+        return res.status(400).json({
+            seccess: false,
+            message: "OTP not match!!!"
+        })
+    }
 }
 
 // Get all user ------ Admin
