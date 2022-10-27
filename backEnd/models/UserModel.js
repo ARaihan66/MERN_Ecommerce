@@ -1,10 +1,12 @@
 const { Schema, model } = require("mongoose");
-const validator = require("validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 
 const userSchema = Schema({
+    otp: {
+        type: Number
+    },
     name: {
         type: String,
         required: [true, "Please Enter Your Name"],
@@ -13,8 +15,7 @@ const userSchema = Schema({
     },
     email: {
         type: String,
-        required: [true, "Please Enter Email"],
-        validate: [validator.isEmail, "Please Enter a Valid Email"],
+        default: '',
         unique: true,
     },
     password: {

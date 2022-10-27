@@ -1,6 +1,7 @@
 const express = require('express');
 const { authentication, authorizeRole } = require('../Authentication/Authentication.js');
 const {
+    createOTP,
     createUser,
     userLogin,
     userLogout,
@@ -14,6 +15,8 @@ const {
 } = require('../controllers/UserController.js');
 const router = express.Router();
 
+router.route('/OTP')
+    .post(createOTP);
 router.route('/registration')
     .post(createUser);
 router.route('/login')

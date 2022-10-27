@@ -1,22 +1,93 @@
 const User = require('../models/UserModel.js');
 const sendToken = require('../Utils/jwtToken');
-const sendMail = require('../Utils/sendMail');
-const randomstring = require('randomstring');
+const Otp = require('../models/OtpModel');
+const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
-const crypto = require("crypto");
 
-//User Registration
-exports.createUser = async (req, res, next) => {
-    const { name, email, password } = req.body;
+//User Registration Sending OTP
+exports.createOTP = async (req, res, next) => {
+    const { email } = req.body;
     let user = await User.findOne({ email: email });
     if (user) {
-        return res.json({
+        return res.status(400).json({
             message: "User Already Registered!!!"
         });
     }
-    user = await User.create({
+
+    const OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
+
+
+    const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false, // true for 465, false for other ports
+        requireTLS: true,
+        auth: {
+            user: process.env.EMAIL, // generated ethereal user
+            pass: process.env.PASSWORD, // generated ethereal password
+        },
+    });
+
+    await transporter.sendMail({
+        from: process.env.EMAIL, // sender address
+        to: email, // list of receivers
+        subject: "OTP Code For Validation", // Subject line
+        text: OTP, // plain text body
+    }, (error, data) => {
+        if (error) {
+            console.log(error.message)
+        }
+        else {
+            console.log("Mail has seccessfully sent", data.response)
+        }
+    })
+
+
+
+    const otpEmail = await Otp.findOne({ email });
+
+    if (!otpEmail) {
+        await Otp.create({
+            email: email,
+            otp: OTP
+        })
+    }
+    else {
+        await Otp.updateOne({ email: email }, {
+            $set: {
+                otp: OTP
+            }
+        }, { new: true })
+    }
+
+    res.status(200).json({
+        success: true,
+        OTP: OTP
+    })
+}
+
+
+//User Registration Receiving OTP
+exports.createUser = async (req, res, next) => {
+    const { otp, name, password, confirmPassword } = req.body;
+    let otpUser = await Otp.findOne({ otp: otp });
+    if (!otpUser) {
+        return res.status(400).json({
+            success: false,
+            message: "User is not found!!!"
+        });
+    }
+
+    if (password !== confirmPassword) {
+        return res.status(400).json({
+            success: false,
+            message: "Password doesn't mathch!!!"
+        });
+    }
+    const user = await User.create({
+        otp: otp,
         name: name,
-        email: email,
+        email: otpUser.email,
         password: password,
         avatar: {
             public_id: 'https://test.com',
