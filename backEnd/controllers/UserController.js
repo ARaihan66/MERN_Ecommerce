@@ -114,12 +114,12 @@ exports.userLogin = async (req, res) => {
         res.status(400).send("Please Provide Email Or Password");
     }
 
-    const user = await User.findOne({ email: email })
+    const user = await User.findOne({ email: email });
     if (!user) {
         return res.status(200).send("User Not Found!!!");
     }
 
-    const isPasswordMatched = user.comparePassword(password);
+    const isPasswordMatched = await user.comparePassword(password);
 
 
     if (!isPasswordMatched) {
@@ -196,7 +196,7 @@ exports.updateProfile = async (req, res, next) => {
 // Update password
 exports.updatePassword = async (req, res, next) => {
 
-    const user = await User.findById(req.user.id).select("+password");
+    const user = await User.findById(req.user.id);
 
     if (!user) {
         return res.status(400).json({
@@ -231,6 +231,14 @@ exports.updatePassword = async (req, res, next) => {
 exports.forgetPassword = async (req, res) => {
     const { email } = req.body;
 
+    let user = await User.findOne({ email: email });
+    if (!user) {
+        return res.status(400).json({
+            message: "User not found with this email!!!"
+        });
+    }
+
+
     const OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
 
     const transporter = nodemailer.createTransport({
@@ -258,16 +266,28 @@ exports.forgetPassword = async (req, res) => {
         }
     })
 
-    await Otp.updateOne({ email: email }, {
-        $set: {
+    const otpEmail = await Otp.findOne({ email });
+
+    if (!otpEmail) {
+        await Otp.create({
+            email: email,
             otp: OTP
-        }
-    }, { new: true })
+        })
+    }
+    else {
+        await Otp.updateOne({ email: email }, {
+            $set: {
+                otp: OTP
+            }
+        }, { new: true })
+    }
 
     res.status(200).json({
         success: true,
         OTP: OTP
     })
+
+
 }
 
 
@@ -275,14 +295,6 @@ exports.forgetPassword = async (req, res) => {
 // Reset password
 exports.resetPassword = async (req, res) => {
     const { otp, password, confirmPassword } = req.body;
-
-    const otpUser = await Otp.findOne({ otp: otp });
-    if (!otpUser) {
-        return res.status(400).json({
-            seccess: false,
-            message: "User is not found !!"
-        })
-    }
 
     if (password !== confirmPassword) {
         return res.status(400).json({
@@ -293,8 +305,10 @@ exports.resetPassword = async (req, res) => {
 
     const hashPassword = await bcrypt.hash(password, 10);
 
+    const otpUser = await Otp.findOne({ otp: otp });
+
     if (otp == otpUser.otp) {
-        user = await User.updateOne({ email: otpUser.email }, {
+        const user = await User.updateOne({ email: otpUser.email }, {
             $set: {
                 otp: otp,
                 password: hashPassword,
@@ -315,7 +329,12 @@ exports.resetPassword = async (req, res) => {
 
 // Get all user ------ Admin
 exports.getAllUser = async (req, res) => {
-    const users = await User.find();
+    const { page, sort } = req.query;
+
+    if (!page) page = 1;
+    const skip = (page - 1) * 10;
+
+    const users = await User.find().sort({ [sort]: -1 }).skip(skip).limit(10);
 
     res.status(200).json({
         success: true,

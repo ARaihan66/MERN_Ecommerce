@@ -99,6 +99,6 @@ const orderSchema = Schema({
         type: Date,
         default: Date.now,
     },
-});
+}, { timestamps: true });
 
 module.exports = model("Order", orderSchema);

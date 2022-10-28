@@ -12,12 +12,19 @@ exports.createProduct = async (req, res, next) => {
 
 //Get all product
 exports.getAllProducts = async (req, res) => {
-    const { page, sort } = req.query;
+    let { page, sort } = req.query;
 
     if (!page) page = 1;
-    const skip = (page - 1) * 12;
+    const skip = (page - 1) * 3;
 
-    const products = await Product.find().sort({ [sort]: -1 }).skip(skip).limit(10);
+    const products = await Product.find().sort({ [sort]: -1 }).skip(skip).limit(3);
+
+    if (products.length == 0) {
+        return res.status(404).json({
+            success: false,
+            message: "Product is not found!!!"
+        })
+    }
     res.status(200).json({
         success: true,
         page: page,

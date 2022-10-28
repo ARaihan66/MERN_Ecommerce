@@ -20,10 +20,9 @@ const userSchema = Schema({
     },
     password: {
         type: String,
-        required: [true, "Please Enter Your Password"],
-        minlength: [4, 'Password Minimum Length Will 4 Characters'],
-        maxlength: [8, 'Password Maximum Length Will 8 Characters'],
-        select: false,
+        minlength: [4, "Minimum length of password is 4 charecters"],
+        maxlenght: [15, "Maximum length of password is 15 charecters"],
+        required: [true, "Password is required"]
     },
     avatar: {
         public_id: {
@@ -50,7 +49,7 @@ const userSchema = Schema({
         default: ''
     }
 
-});
+}, { timestamps: true });
 
 //hash password
 userSchema.pre("save", async function (next) {
@@ -72,11 +71,10 @@ userSchema.methods.getJwtToken = function () {
 
 //compare password
 userSchema.methods.comparePassword = async function (givenPassword) {
-    return await bcrypt.compare(givenPassword, this.password, (err, res) => {
-
-    });
+    return await bcrypt.compare(givenPassword, this.password);
 }
 
 
-module.exports = model("User", userSchema);
+const userModel = model("User", userSchema);
+module.exports = userModel;
 

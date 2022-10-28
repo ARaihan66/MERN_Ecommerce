@@ -29,6 +29,6 @@ const cartSchema = new Schema({
         type: Number,
         required: [true, "Please enter your product stock"],
     }
-});
+}, { timestamps: true });
 
 module.exports = model("Cart", cartSchema);
