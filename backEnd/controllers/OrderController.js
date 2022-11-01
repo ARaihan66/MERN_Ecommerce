@@ -1,14 +1,12 @@
 const Order = require('../models/OrderModel.js');
 
 
-//Create Product
+//Create Order
 exports.createOrder = async (req, res, next) => {
     const {
         shippingInfo,
         orderItem,
         paymentInfo,
-        itemPrice,
-        taxPrice,
         shippingPrice,
         totalPrice
     } = req.body
@@ -16,8 +14,6 @@ exports.createOrder = async (req, res, next) => {
         shippingInfo,
         orderItem,
         paymentInfo,
-        itemPrice,
-        taxPrice,
         shippingPrice,
         totalPrice,
         paidAt: Date.now(),
@@ -72,16 +68,16 @@ exports.getAdminAllOrder = async (req, res, next) => {
         })
     }
 
-    let totalAmount = 0;
+    let totalPrice = 0;
 
     orders.forEach((order) => {
-        totalAmount += order.totalAmount;
+        totalPrice += order.totalPrice
     })
 
     res.status(200).json({
         success: true,
-        totalAmount,
-        orders
+        Amount: totalPrice,
+        Orders: orders
     })
 }
 
@@ -108,7 +104,7 @@ exports.updateAdminOrder = async (req, res, next) => {
 
     if (req.body.status === "Shipped") {
         order.orderItems.forEach(async (o) => {
-            await updateStock(o.product, o.quantity);
+            await updateStock(o.productId, o.quantity);
         });
     }
     order.orderStatus = req.body.status;
@@ -133,7 +129,7 @@ async function updateStock(id, quantity) {
 }
 
 
-// Delete Order ---Admin
+// Delete Order 
 exports.deleteOrder = async (req, res, next) => {
 
     const order = await Order.findById(req.params.id);

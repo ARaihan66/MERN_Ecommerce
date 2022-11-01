@@ -10,21 +10,10 @@ const orderSchema = Schema({
             type: String,
             required: true,
         },
-        state: {
-            type: String,
-            required: true,
-        },
-        country: {
-            type: String,
-            required: true,
-        },
-        pinCode: {
-            type: Number
-        },
         phoneNo: {
             type: Number,
             required: true,
-        },
+        }
     },
     orderItems: [
         {
@@ -70,15 +59,6 @@ const orderSchema = Schema({
         type: Date,
         required: true,
     },
-    itemsPrice: {
-        type: Number,
-        required: true,
-        default: 0,
-    },
-    taxPrice: {
-        type: Number,
-        default: 0,
-    },
     shippingPrice: {
         type: Number,
         required: true,
@@ -89,16 +69,13 @@ const orderSchema = Schema({
         required: true,
         default: 0,
     },
+
     orderStatus: {
         type: String,
         required: true,
         default: "Processing",
     },
     deliveredAt: Date,
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
 }, { timestamps: true });
 
 module.exports = model("Order", orderSchema);
