@@ -4,8 +4,9 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import Cart from '../../../Picture/Cart.png';
-import User from '../../../Picture/User.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faCartShopping } from '@fortawesome/free-solid-svg-icons';
+
 
 
 const Navigation = () => {
@@ -30,12 +31,12 @@ const Navigation = () => {
                             className="me-2"
                             aria-label="Search"
                         />
-                        <Button variant="outline-success">Search</Button>
+                        <Button variant="outline-secondary">Search</Button>
                     </Form>
 
                     <Nav>
-                        <Nav.Link href="#action6"><img src={Cart} style={{ height: '30px', width: '30px' }} /></Nav.Link>
-                        <Nav.Link href="#action7"><img src={User} style={{ height: '30px', width: '30px' }} /></Nav.Link>
+                        <Nav.Link href="#action6"><FontAwesomeIcon icon={faCartShopping} style={{ margin: "5px", height: "20px" }} /></Nav.Link>
+                        <Nav.Link href="#action6"><FontAwesomeIcon icon={faUser} style={{ margin: "5px", height: "20px" }} /></Nav.Link>
                     </Nav>
 
                 </Navbar.Collapse>
