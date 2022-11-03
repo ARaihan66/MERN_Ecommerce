@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { faMagnifyingGlass, faCartShopping, faUser } from '@fortawesome/free-solid-svg-icons'
 
 const Container = styled.div`
 height:60px;
@@ -21,8 +21,11 @@ flex:1;
 `
 const Right = styled.div`
 flex:1;
+display:flex;
+align-items:center;
+justify-content:flex-end;
 `
-
+// Left div
 const Language = styled.span`
 font-size:14px;
 cursor:pointer;
@@ -39,6 +42,19 @@ const Input = styled.input`
 border:none;
 `
 
+//Center div
+const Logo = styled.h1`
+font-weight : bold;
+text-align: center;
+`
+
+//Right div
+const MenuItem = styled.div`
+font-size: 14px;
+cursor:pointer;
+margin-left:15px;
+`
+
 const Navbar = () => {
     return (
         <Container>
@@ -51,8 +67,18 @@ const Navbar = () => {
                     </SearchContainer>
                 </Left>
 
-                <Center>Center</Center>
-                <Right>Right</Right>
+                <Center>
+                    <Logo>
+                        POLO.
+                    </Logo>
+                </Center>
+
+                <Right>
+                    <MenuItem>REGISTER</MenuItem>
+                    <MenuItem>SIGN IN</MenuItem>
+                    <MenuItem><FontAwesomeIcon icon={faCartShopping} /></MenuItem>
+                    <MenuItem><FontAwesomeIcon icon={faUser} /></MenuItem>
+                </Right>
             </Wrapper>
         </Container>
     )
