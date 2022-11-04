@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleArrowLeft, faCircleArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { SlidderItems } from './Data';
+import { slidderItems } from './Data';
 import { useState } from 'react';
 
 
@@ -90,7 +90,7 @@ const Slidder = () => {
                 <FontAwesomeIcon icon={faCircleArrowLeft} />
             </Arrow>
             <Wrapper slideIndex={slideIndex}>
-                {SlidderItems.map(item => (
+                {slidderItems.map(item => (
                     <Slide bg={item.bg}>
                         <ImgContainer>
                             <Image src={item.img} />
