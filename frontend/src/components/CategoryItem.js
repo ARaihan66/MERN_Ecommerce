@@ -5,6 +5,10 @@ flex:1;
 margin:5px;
 height:70vh;
 position:relative;
+
+&:hover{
+    opacity: 0.9;
+}
 `
 const Image = styled.img`
 width:100%;
@@ -27,11 +31,16 @@ color:white;
 margin-bottom:20px;
 `
 const Button = styled.button`
-border;none;
+border:none;
 padding:10px;
 background-color:white;
 color:gray;
 cursor:pointer;
+
+&:hover{
+    color: white;
+    background-color: teal;
+}
 `
 
 const CategoryItem = (props) => {

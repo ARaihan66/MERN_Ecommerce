@@ -16,6 +16,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 background-color: rgba(0,0,0,0.2);
+transition-duration:1s;
 `
 
 const Container = styled.div`
@@ -37,7 +38,6 @@ const Image = styled.img`
 width:80%;
 height:75%;
 z-index:2;
-}
 `
 
 const Icon = styled.div`
@@ -50,6 +50,7 @@ align-items:center;
 justify-content:center;
 margin:5px;
 cursor:pointer;
+transition-duration:0.5s;
 
 &:hover{
     background-color:#e9f5f5;
