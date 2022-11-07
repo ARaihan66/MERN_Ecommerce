@@ -46,6 +46,7 @@ border:none;
 const Logo = styled.h1`
 font-weight : bold;
 text-align: center;
+letter-spacing:3px;
 `
 
 //Right div

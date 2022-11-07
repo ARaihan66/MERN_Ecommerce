@@ -1,9 +1,21 @@
 import Slidder1 from "../Picture/Slidder/Slidder1.png";
 import Slidder2 from "../Picture/Slidder/Slidder2.png";
 import Slidder3 from "../Picture/Slidder/Slidder3.png";
+
 import GirlDress from "../Picture/Category/girldress.jpg";
 import SwiterWomen from "../Picture/Category/switerwomen.jpg";
 import Switermen from "../Picture/Category/switermen.jpg";
+
+import Coat from "../Picture/Products/coat.jpg";
+import Desktop from "../Picture/Products/desktop.jpg";
+import AnalogWatch from "../Picture/Products/analogwatch.jpg";
+import Headphone from "../Picture/Products/headphone.jpg";
+import AirPod from "../Picture/Products/airpod.jpg";
+import Shoe from "../Picture/Products/shoe.jpg";
+import Bag from "../Picture/Products/bag.jpg";
+import Camera from "../Picture/Products/camera.jpg";
+
+
 export const slidderItems = [
     {
         id: 1,
@@ -43,5 +55,41 @@ export const categories = [
         id: 3,
         img: Switermen,
         title: "SWITER MEN"
+    }
+]
+
+
+export const popularProducts = [
+    {
+        id: 1,
+        img: Headphone
+    },
+    {
+        id: 2,
+        img: Coat
+    },
+    {
+        id: 3,
+        img: AirPod
+    },
+    {
+        id: 4,
+        img: Bag
+    },
+    {
+        id: 5,
+        img: AnalogWatch
+    },
+    {
+        id: 6,
+        img: Shoe
+    },
+    {
+        id: 7,
+        img: Desktop
+    },
+    {
+        id: 8,
+        img: Camera
     }
 ]
