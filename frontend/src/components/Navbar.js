@@ -32,14 +32,24 @@ cursor:pointer;
 `
 
 const SearchContainer = styled.div`
-border: 1px solid lightgray;
+width: 80%;
 display:flex;
 align-items:center;
+background-color: white;
 margin-left:25px;
-padding:5px;
+justify-content: space-between;
+border: 1px solid lightgray;
 `
 const Input = styled.input`
-border:none;
+border: none;
+flex:7;
+padding: 7px;
+`
+const Icon = styled.div`
+margin-left: 24px;
+flex:1;
+border: none;
+cursor: pointer;
 `
 
 //Center div
@@ -63,8 +73,10 @@ const Navbar = () => {
                 <Left>
                     <Language>EN</Language>
                     <SearchContainer>
-                        <Input></Input>
-                        <FontAwesomeIcon icon={faMagnifyingGlass} />
+                        <Input placeholder='Search' />
+                        <Icon>
+                            <FontAwesomeIcon icon={faMagnifyingGlass} />
+                        </Icon>
                     </SearchContainer>
                 </Left>
 
