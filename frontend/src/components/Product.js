@@ -1,6 +1,6 @@
 import styled from "styled-components"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping, faMagnifyingGlass, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { FaShoppingCart, FaSearch, FaHeart } from 'react-icons/fa';
+
 
 
 const Info = styled.div`
@@ -65,13 +65,13 @@ const Product = (props) => {
             <Image src={props.item.img} />
             <Info>
                 <Icon>
-                    <FontAwesomeIcon icon={faCartShopping} />
+                    <FaShoppingCart />
                 </Icon>
                 <Icon>
-                    <FontAwesomeIcon icon={faMagnifyingGlass} />
+                    <FaSearch />
                 </Icon>
                 <Icon>
-                    <FontAwesomeIcon icon={faHeart} />
+                    <FaHeart />
                 </Icon>
             </Info>
         </Container>

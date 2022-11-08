@@ -1,6 +1,5 @@
 import styled from 'styled-components'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleArrowLeft, faCircleArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa'
 import { slidderItems } from './Data';
 import { useState } from 'react';
 
@@ -87,7 +86,7 @@ const Slidder = () => {
     return (
         <Container>
             <Arrow direction="left" onClick={() => handleClick("left")}>
-                <FontAwesomeIcon icon={faCircleArrowLeft} />
+                < FaArrowCircleLeft />
             </Arrow>
             <Wrapper slideIndex={slideIndex}>
                 {slidderItems.map(item => (
@@ -104,7 +103,7 @@ const Slidder = () => {
                 ))}
             </Wrapper>
             <Arrow direction="right" onClick={() => handleClick("right")}>
-                <FontAwesomeIcon icon={faCircleArrowRight} />
+                <FaArrowCircleRight />
             </Arrow>
         </Container>
     )

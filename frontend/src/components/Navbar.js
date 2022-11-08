@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faCartShopping, faUser } from '@fortawesome/free-solid-svg-icons'
+import { FaShoppingCart, FaSearch, FaUser } from 'react-icons/fa'
 
 const Container = styled.div`
 height:60px;
@@ -75,7 +74,7 @@ const Navbar = () => {
                     <SearchContainer>
                         <Input placeholder='Search' />
                         <Icon>
-                            <FontAwesomeIcon icon={faMagnifyingGlass} />
+                            <FaSearch />
                         </Icon>
                     </SearchContainer>
                 </Left>
@@ -89,8 +88,8 @@ const Navbar = () => {
                 <Right>
                     <MenuItem>REGISTER</MenuItem>
                     <MenuItem>SIGN IN</MenuItem>
-                    <MenuItem><FontAwesomeIcon icon={faCartShopping} /></MenuItem>
-                    <MenuItem><FontAwesomeIcon icon={faUser} /></MenuItem>
+                    <MenuItem><FaShoppingCart /></MenuItem>
+                    <MenuItem><FaUser /></MenuItem>
                 </Right>
             </Wrapper>
         </Container>

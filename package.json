@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/ARaihan66/MERN_Ecommerce#readme",
   "dependencies": {
+    "@material-ui/icons": "^4.11.3",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
     "cookie-parser": "^1.4.6",

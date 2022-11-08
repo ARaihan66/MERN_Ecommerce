@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { CiPaperplane } from 'react-icons/ci'
 
 const Container = styled.div`
 height:60vh;
@@ -22,7 +21,7 @@ margin-bottom: 20px;
 const InputContainer = styled.div`
 width: 50%;
 height: 40px;
-background-color: white;
+
 display: flex;
 justify-content: space-between;
 border: 1px solid lightgray;
@@ -37,9 +36,11 @@ flex: 1;
 border: none;
 background-color: gray;
 color: white;
+font-size:20px;
 
 &:hover{
     background-color: teal;
+    color: black;
 }
 `
 
@@ -51,7 +52,7 @@ const Newsletter = () => {
             <InputContainer>
                 <Input placeholder='abc@gmail.con' />
                 <Button>
-                    <FontAwesomeIcon icon={faPaperPlane} />
+                    < CiPaperplane />
                 </Button>
             </InputContainer>
         </Container>

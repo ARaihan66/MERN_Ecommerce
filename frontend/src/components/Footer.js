@@ -1,6 +1,9 @@
 import styled from "styled-components";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { } from '@fortawesome/free-solid-svg-icons'
+import { FaFacebookF, FaInstagram, FaTwitter, FaWhatsapp } from 'react-icons/fa';
+
+
+
+
 
 const Container = styled.div`
 display: flex;
@@ -10,16 +13,36 @@ const Logo = styled.h1`
 `
 const Description = styled.p`
 text-align: justify;
+margin: 20px 0px;
 `
 const SocialContainer = styled.div`
 
 `
 const SocialIcon = styled.div`
+display: flex;
+font-size: 30px;
+margin: 10px 0;
+`
+const Icon = styled.div`
+cursor: pointer;
+width: 50px;
+height: 50px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+margin: 8px;
+background-color: #${props => props.color};
 
+&:hover{
+    background-color: wheat;
+}
 `
 
 const Left = styled.div`
 flex: 1;
+flex-direction: column;
+padding: 20px;
 `
 
 const Center = styled.div`
@@ -40,7 +63,18 @@ const Footer = () => {
                 </Description>
                 <SocialContainer>
                     <SocialIcon>
-                        {/* <FontAwesomeIcon icon={ } /> */}
+                        <Icon color='385999'>
+                            <FaFacebookF />
+                        </Icon>
+                        <Icon color='E4405F'>
+                            <FaInstagram />
+                        </Icon>
+                        <Icon color='55ACEE'>
+                            <FaTwitter />
+                        </Icon>
+                        <Icon color='E60023'>
+                            <FaWhatsapp />
+                        </Icon>
                     </SocialIcon>
                 </SocialContainer>
             </Left>
