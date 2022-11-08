@@ -13,7 +13,7 @@ font-weight:500;
 const Announcement = () => {
     return (
         <Container>
-            Super Deal!! Free Shipping on Orders Over 1000 taka
+            Super Deal!! Free Shipping on Orders Over 750$
         </Container>
     )
 }

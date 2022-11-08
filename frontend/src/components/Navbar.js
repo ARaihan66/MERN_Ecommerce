@@ -63,6 +63,7 @@ const MenuItem = styled.div`
 font-size: 14px;
 cursor:pointer;
 margin-left:15px;
+font-size: ${props => props.fontSize};
 `
 
 const Navbar = () => {
@@ -81,15 +82,15 @@ const Navbar = () => {
 
                 <Center>
                     <Logo>
-                        POLO.
+                        POLO.SHOP
                     </Logo>
                 </Center>
 
                 <Right>
                     <MenuItem>REGISTER</MenuItem>
                     <MenuItem>SIGN IN</MenuItem>
-                    <MenuItem><FaShoppingCart /></MenuItem>
-                    <MenuItem><FaUser /></MenuItem>
+                    <MenuItem fontSize='20px'><FaShoppingCart /></MenuItem>
+                    <MenuItem fontSize='20px'><FaUser /></MenuItem>
                 </Right>
             </Wrapper>
         </Container>
