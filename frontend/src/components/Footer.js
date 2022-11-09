@@ -126,10 +126,10 @@ const Footer = () => {
             <Right>
                 <Title>Contact</Title>
                 <ContactItem>
-                    <MdRoom style={{ fontSize: '20px', marginRight: '8px' }} /> 401/23 Malibagh, Dhaka, Bangladesh
+                    <MdRoom style={{ fontSize: '20px', marginRight: '8px' }} /> 410 Terry Ave N, Seattle 98109, WA
                 </ContactItem>
                 <ContactItem>
-                    <FaPhoneAlt style={{ fontSize: '20px', marginRight: '8px' }} />  +880 1767 013 859
+                    <FaPhoneAlt style={{ fontSize: '20px', marginRight: '8px' }} />  +99 347 3458
                 </ContactItem>
                 <ContactItem>
                     <MdMail style={{ fontSize: '20px', marginRight: '8px' }} />contact@poloshop.com
