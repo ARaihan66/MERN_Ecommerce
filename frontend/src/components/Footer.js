@@ -61,6 +61,11 @@ flex-wrap: wrap;
 const ListItem = styled.li`
 margin-bottom: 15px;
 width: 50%;
+cursor: pointer;
+
+&:hover{
+    text-decoration: underline;
+}
 `
 const Right = styled.div`
 flex: 1;
