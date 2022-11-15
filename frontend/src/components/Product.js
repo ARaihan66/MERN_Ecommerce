@@ -2,7 +2,6 @@ import styled from "styled-components"
 import { FaShoppingCart, FaSearch, FaHeart } from 'react-icons/fa';
 
 
-
 const Info = styled.div`
 opacity:0;
 width:100%;

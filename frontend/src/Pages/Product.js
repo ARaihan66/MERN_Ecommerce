@@ -3,7 +3,8 @@ import Navbar from '../components/Navbar';
 import Announcement from '../components/Announcement';
 import Newsletter from '../components/Newsletter';
 import Footer from '../components/Footer';
-import { MdAdd, MdRemove } from 'react-icons/md'
+import { MdAdd, MdRemove } from 'react-icons/md';
+import { mobile } from '../Responsive';
 
 
 const Container = styled.div`
@@ -12,6 +13,11 @@ const Container = styled.div`
 const Wrapper = styled.div`
 padding: 50px;
 display: flex;
+${mobile({
+    diaplay: 'flex',
+    flexDirection: 'column',
+    padding: '15px'
+})}
 `
 const ImgContainer = styled.div`
 flex:1;
@@ -20,20 +26,38 @@ const Image = styled.img`
 width: 100%;
 height: 90vh;
 object-fit: cover;
+${mobile({
+    height: '40%'
+})}
 `
 const InfoContainer = styled.div`
 flex: 1;
-padding: 0px 50px;
+padding: 0px 20px;
+
+${mobile({
+    padding: '0px 10px',
+})}
 `
 const Title = styled.h1`
 font-weight: 300;
+${mobile({
+    fontSize: '18px',
+    marginTop: '20px'
+})}
 `
 const Description = styled.p`
-margin: 20px 0px;
+margin: 10px 0px;
+text-align: justify;
+${mobile({
+    fontSize: '16px',
+})}
 `
 const Price = styled.span`
 font-weight:100;
 font-size:40px;
+${mobile({
+    fontSize: '18px'
+})}
 `
 const FilterContainer = styled.div`
 margin: 30px 0px;
@@ -49,6 +73,9 @@ const FilterTitle = styled.span`
 margin: 0px 10px;
 font-size: 20px;
 font-weight: 200;
+${mobile({
+    fontSize: '16px'
+})}
 `
 
 const FilterColor = styled.div`
@@ -71,6 +98,9 @@ width: 50%;
 display: flex;
 align-items: center;
 justify-content: space-between;
+${mobile({
+    width: '90%'
+})}
 `
 const AmountContainer = styled.div`
 display: flex;
@@ -93,7 +123,7 @@ border: 2px solid teal;
 background-color: white;
 font-weight: 700;
 cursor: pointer;
-
+border-radius: 5px;
 &:hover{
     background-color: #f8f4f4;
 }
