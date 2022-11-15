@@ -1,9 +1,11 @@
 import React from 'react'
 import styled from 'styled-components';
 import { FaShoppingCart, FaSearch, FaUser } from 'react-icons/fa'
+import { mobile } from '../Responsive'
 
 const Container = styled.div`
 height:60px;
+${mobile({ height: "50px" })}
 `
 const Wrapper = styled.div`
 padding:10px ;
@@ -23,11 +25,13 @@ flex:1;
 display:flex;
 align-items:center;
 justify-content:flex-end;
+${mobile({ flex: "2", justifyContant: "center" })}
 `
 // Left div
 const Language = styled.span`
 font-size:14px;
 cursor:pointer;
+${mobile({ display: "none" })}
 `
 
 const SearchContainer = styled.div`
@@ -43,12 +47,20 @@ const Input = styled.input`
 border: none;
 flex:7;
 padding: 7px;
+${mobile({ width: "50px", padding: '4px' })}
 `
 const Icon = styled.div`
 margin-left: 24px;
 flex:1;
 border: none;
 cursor: pointer;
+${mobile({
+    display: "flex",
+    alignItem: "center",
+    justifyContant: "center",
+    margin: '0px 10px',
+    fontSize: '12px'
+})}
 `
 
 //Center div
@@ -56,6 +68,7 @@ const Logo = styled.h1`
 font-weight : bold;
 text-align: center;
 letter-spacing:3px;
+${mobile({ fontSize: "24px", marginLeft: '15px' })}
 `
 
 //Right div
@@ -64,6 +77,10 @@ font-size: 14px;
 cursor:pointer;
 margin-left:15px;
 font-size: ${props => props.fontSize};
+${mobile({
+    fontSize: "9px",
+    marginLeft: "3px"
+})}
 `
 
 const Navbar = () => {
@@ -82,7 +99,7 @@ const Navbar = () => {
 
                 <Center>
                     <Logo>
-                        POLO.SHOP
+                        POLO'S
                     </Logo>
                 </Center>
 

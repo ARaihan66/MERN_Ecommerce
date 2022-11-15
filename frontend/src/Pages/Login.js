@@ -1,11 +1,15 @@
 import styled from 'styled-components'
 import IconImg from '../Picture/LogInIconImage/iconImage.png'
-
+import { mobile } from '../Responsive'
 
 const Container = styled.div`
 display: flex;
 margin: 15px 15px;
 justify-content: space-between;
+${mobile({
+    display: 'flex',
+    flexDirection: 'column'
+})}
 `
 const LeftWrapper = styled.div`
 flex: 1;
@@ -36,6 +40,9 @@ flex-direction: column;
 `
 const Title = styled.h1`
 margin: 20px;
+${mobile({
+    fontSize: '20px'
+})}
 `
 const Icon = styled.div`
 width: 150px;
@@ -63,8 +70,11 @@ const Input = styled.input`
 margin: 5px;
 padding: 15px;
 border-radius: 5px;
-width: 400px;
 border: none;
+width:400px;
+${mobile({
+    width: '300px'
+})}
 `
 const Button = styled.button`
 margin: 10px;

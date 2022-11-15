@@ -1,18 +1,21 @@
 import styled from 'styled-components';
 import IconImg from '../Picture/LogInIconImage/iconImage.png';
-
+import { mobile } from '../Responsive'
 
 const Container = styled.div`
 display: flex;
 margin: 10px 10px;
 justify-content: space-between;
+${mobile({
+    display: 'flex',
+    flexDirection: 'column'
+})}
 `
 const LeftWrapper = styled.div`
 flex: 1;
 display:flex;
 justify-content: center;
 align-items: center;
-
 background-repeat: no-repeat;
 `
 const Image = styled.img`
@@ -32,7 +35,12 @@ justify-content: center;
 flex-direction: column;
 `
 const Title = styled.h1`
-margin: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+${mobile({
+    fontSize: '20px'
+})}
 `
 const Icon = styled.div`
 width: 150px;
@@ -61,7 +69,10 @@ const Input = styled.input`
 margin: 5px;
 padding: 15px;
 border-radius: 5px;
-width: 400px;
+width:400px;
+${mobile({
+    width: '300px'
+})}
 `
 const Agreement = styled.span`
 

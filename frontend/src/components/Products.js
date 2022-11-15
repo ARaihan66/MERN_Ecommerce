@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { popularProducts } from './Data';
 import Product from "./Product";
+import { mobile } from "../Responsive";
 
 const Container = styled.div`
 background-color: antiquewhite;
@@ -12,6 +13,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 margin: 20px 0;
+${mobile({ fontSize: "20px", paddingTop: "10px" })}
 `
 
 const Item = styled.div`
@@ -19,6 +21,7 @@ padding:20px;
 display:flex;
 flex-wrap:wrap;
 justify-content:space-between;
+${mobile({ paddingTop: '10px' })}
 `
 
 

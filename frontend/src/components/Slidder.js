@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa'
 import { slidderItems } from './Data';
 import { useState } from 'react';
+import { mobile } from '../Responsive';
 
 
 const Container = styled.div`
@@ -10,6 +11,9 @@ height:100vh;
 display:flex;
 position:relative;
 overflow:hidden;
+${mobile({
+
+})}
 `
 const Arrow = styled.div`
 width:50px;

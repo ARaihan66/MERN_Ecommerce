@@ -1,12 +1,19 @@
 import styled from "styled-components";
 import { FaFacebookF, FaInstagram, FaTwitter, FaWhatsapp, FaPhoneAlt } from 'react-icons/fa';
 import { MdRoom, MdMail } from 'react-icons/md';
+import { mobile } from '../Responsive'
 
 const Container = styled.div`
 display: flex;
+${mobile({
+    display: "flex",
+    flexDirection: "column"
+})}
 `
 const Logo = styled.h1`
-
+${mobile({
+    fontSize: '20px'
+})}
 `
 const Description = styled.p`
 text-align: justify;
@@ -49,6 +56,9 @@ padding: 20px;
 const Title = styled.h3`
 margin-top: 10px;
 margin-bottom:30px;
+${mobile({
+    fontSize: '18px'
+})}
 `
 const List = styled.ul`
 margin: 0;
@@ -88,7 +98,7 @@ const Footer = () => {
     return (
         <Container>
             <Left>
-                <Logo>POLO.SHOP</Logo>
+                <Logo>POLO'S SHOP</Logo>
                 <Description>
                     Online Shopping BD has never been easier. POLO.SHOP is best online shopping store in all countries that features 10+ million products at affordable prices. It is reliable and convenient delivery of products to your doorstep. POLO.SHOP being the trusted online shop  aims to provide a trouble-free shopping experience for the people of the world but is also providing ample opportunity for international online shopping.
                 </Description>
