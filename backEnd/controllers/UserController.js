@@ -154,44 +154,6 @@ exports.userDetails = async (req, res) => {
     })
 }
 
-// User profile update
-exports.updateProfile = async (req, res, next) => {
-
-    let user = await User.findById(req.user.id);
-
-    if (!user) {
-        return res.status(400).json({
-            success: false,
-            message: "User is not found with this email !!"
-        })
-    }
-
-    if (user.email === req.body.email) {
-        return res.status(400).json({
-            success: false,
-            message: "User is already registered with this email !!"
-        })
-    }
-
-    const updatedData = {
-        name: req.body.name,
-        email: req.body.email
-    }
-
-    user = await User.findByIdAndUpdate(req.user.id, updatedData, {
-        new: true,
-        runValidators: true,
-        useFindAndModify: false
-    })
-
-    await user.save();
-
-    res.status(200).json({
-        message: 'Profile is successfully updated!!',
-        updatedUser: user
-    })
-
-}
 
 // Update password
 exports.updatePassword = async (req, res, next) => {
@@ -289,7 +251,6 @@ exports.forgetPassword = async (req, res) => {
 
 
 }
-
 
 
 // Reset password

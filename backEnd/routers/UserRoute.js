@@ -9,7 +9,6 @@ const {
     resetPassword,
     userDetails,
     updatePassword,
-    updateProfile,
     getAllUser,
     getSingleUser
 } = require('../controllers/UserController.js');
@@ -25,8 +24,6 @@ router.route('/logout')
     .get(verifyTokenAndAuthorization, userLogout);
 router.route('/me')
     .get(verifyTokenAndAuthorization, userDetails);
-router.route('/me/profile/update')
-    .put(verifyTokenAndAuthorization, updateProfile);
 router.route('/me/password/update')
     .put(verifyTokenAndAuthorization, updatePassword);
 router.route('/password/forgot')
