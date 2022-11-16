@@ -34,16 +34,10 @@ const userSchema = Schema({
             required: true,
         },
     },
-    role: {
-        type: String,
-        enum: ['user', 'admin'],
-        default: "user",
+    isAdmin: {
+        type: Boolean,
+        default: false,
     },
-    createdAt: {
-        type: Date,
-        default: Date.now(),
-    },
-
     token: {
         type: String,
         default: ''

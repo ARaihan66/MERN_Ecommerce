@@ -12,6 +12,6 @@ dotenv.config({
 databaseConnection();
 
 //create server
-const server = app.listen(process.env.PORT, () => {
+const server = app.listen(process.env.PORT || 4000, () => {
     console.log('Server is running successfully!!!');
 })
