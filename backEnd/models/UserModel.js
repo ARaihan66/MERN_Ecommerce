@@ -25,19 +25,7 @@ const userSchema = Schema({
         required: [true, "Password is required"]
     },
     confirmPassword: {
-        type: String,
-        // minlength: [4, "Minimum length of password is 4 charecters"],
-        // maxlenght: [15, "Maximum length of password is 15 charecters"],
-    },
-    avatar: {
-        public_id: {
-            type: String,
-            required: true,
-        },
-        url: {
-            type: String,
-            required: true,
-        },
+        type: String
     },
     isAdmin: {
         type: Boolean,

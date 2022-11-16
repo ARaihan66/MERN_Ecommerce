@@ -20,9 +20,9 @@ router.route('/registration')
     .post(createUser);
 router.route('/login')
     .post(userLogin);
-router.route('/logout')
+router.route('/logout/:id')
     .get(verifyTokenAndAuthorization, userLogout);
-router.route('/me')
+router.route('/me/:id')
     .get(verifyTokenAndAuthorization, userDetails);
 router.route('/me/password/update/:id')
     .put(verifyTokenAndAuthorization, updatePassword);
@@ -31,8 +31,8 @@ router.route('/password/forgot')
 router.route('/password/reset/:token')
     .put(resetPassword);
 router.route('/admin/users')
-    .get(verifyTokenAndAuthorization, verifyTokenAndAdmin, getAllUser);
+    .get(verifyTokenAndAdmin, getAllUser);
 router.route('/admin/user/:id')
-    .get(verifyTokenAndAuthorization, verifyTokenAndAdmin, getSingleUser);
+    .get(verifyTokenAndAdmin, getSingleUser);
 
 module.exports = router;

@@ -89,11 +89,7 @@ exports.createUser = async (req, res) => {
         otp: otp,
         name: name,
         email: otpUser.email,
-        password: password,
-        avatar: {
-            public_id: 'https://test.com',
-            url: 'https://test.com'
-        }
+        password: password
     })
 
     res.status(200).json({
@@ -290,7 +286,7 @@ exports.resetPassword = async (req, res) => {
 exports.getAllUser = async (req, res) => {
     const { page, sort } = req.query;
 
-    if (!page) page = 1;
+    if (!page) return page = 1;
     const skip = (page - 1) * 10;
 
     const users = await User.find().sort({ [sort]: -1 }).skip(skip).limit(10);
