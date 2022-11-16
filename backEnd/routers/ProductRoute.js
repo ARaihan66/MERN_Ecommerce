@@ -13,7 +13,7 @@ const { verifyTokenAndAuthorization, verifyTokenAndAdmin } = require('../Authent
 const router = express.Router();
 
 router.route('/create/product')
-    .post(verifyTokenAndAuthorization, verifyTokenAndAdmin, createProduct);
+    .post(verifyTokenAndAdmin, createProduct);
 
 router.route('/products')
     .get(getAllProducts);

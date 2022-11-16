@@ -44,9 +44,9 @@ exports.createOTP = async (req, res, next) => {
 
 
 
-    const otpEmail = await Otp.findOne({ email });
+    const otpUser = await Otp.findOne({ email });
 
-    if (!otpEmail) {
+    if (!otpUser) {
         await Otp.create({
             email: email,
             otp: OTP
@@ -95,8 +95,6 @@ exports.createUser = async (req, res) => {
             url: 'https://test.com'
         }
     })
-
-    // sendToken(user, 200, res);
 
     res.status(200).json({
         success: true,
@@ -149,7 +147,7 @@ exports.userDetails = async (req, res) => {
     const user = await User.findById(req.user.id);
 
     res.status(200).json({
-        message: "Successfully get profile information",
+        message: "Successfully user profile information",
         user: user
     })
 }
@@ -228,9 +226,9 @@ exports.forgetPassword = async (req, res) => {
         }
     })
 
-    const otpEmail = await Otp.findOne({ email });
+    const otpUser = await Otp.findOne({ email });
 
-    if (!otpEmail) {
+    if (!otpUser) {
         await Otp.create({
             email: email,
             otp: OTP
@@ -268,7 +266,7 @@ exports.resetPassword = async (req, res) => {
 
     const otpUser = await Otp.findOne({ otp: otp });
 
-    if (otp == otpUser.otp) {
+    if (otp === otpUser.otp) {
         const user = await User.updateOne({ email: otpUser.email }, {
             $set: {
                 otp: otp,

@@ -24,7 +24,7 @@ router.route('/logout')
     .get(verifyTokenAndAuthorization, userLogout);
 router.route('/me')
     .get(verifyTokenAndAuthorization, userDetails);
-router.route('/me/password/update')
+router.route('/me/password/update/:id')
     .put(verifyTokenAndAuthorization, updatePassword);
 router.route('/password/forgot')
     .post(forgetPassword);

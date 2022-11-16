@@ -2,7 +2,7 @@ const User = require("../models/UserModel.js");
 const jwt = require('jsonwebtoken');
 
 
-exports.authentication = (req, res, next) => {
+const authentication = (req, res, next) => {
     const { token } = req.cookies;
 
     if (!token) {
@@ -22,8 +22,8 @@ exports.authentication = (req, res, next) => {
 }
 
 
-exports.verifyTokenAndAuthorization = (req, res, next) => {
-    this.verifyToken(req, res, () => {
+const verifyTokenAndAuthorization = (req, res, next) => {
+    authentication(req, res, () => {
         if (req.user.id === req.params.id || req.user.isAdmin) {
             next();
         } else {
@@ -36,8 +36,8 @@ exports.verifyTokenAndAuthorization = (req, res, next) => {
 }
 
 
-exports.verifyTokenAndAdmin = (req, res, next) => {
-    this.verifyToken(req, res, () => {
+const verifyTokenAndAdmin = (req, res, next) => {
+    authentication(req, res, () => {
         if (req.user.isAdmin) {
             next();
         } else {
@@ -47,4 +47,10 @@ exports.verifyTokenAndAdmin = (req, res, next) => {
             })
         }
     })
+}
+
+module.exports = {
+    authentication,
+    verifyTokenAndAuthorization,
+    verifyTokenAndAdmin
 }
