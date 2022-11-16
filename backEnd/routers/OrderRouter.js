@@ -13,7 +13,7 @@ router.route('/orders/me')
     .get(authentication, getAllOrder);
 
 router.route('/all/orders')
-    .get(authentication, authorizeRole('admin'), getAdminAllOrder);
+    .get(authentication, getAdminAllOrder);
 
 router.route('/delete/order')
     .get(authentication, deleteOrder);

@@ -24,6 +24,11 @@ const userSchema = Schema({
         maxlenght: [15, "Maximum length of password is 15 charecters"],
         required: [true, "Password is required"]
     },
+    confirmPassword: {
+        type: String,
+        // minlength: [4, "Minimum length of password is 4 charecters"],
+        // maxlenght: [15, "Maximum length of password is 15 charecters"],
+    },
     avatar: {
         public_id: {
             type: String,
@@ -58,7 +63,7 @@ userSchema.pre("save", async function (next) {
 
 // jwt token
 userSchema.methods.getJwtToken = function () {
-    return jwt.sign({ id: this._id }, process.env.JWT_SECRET_KEY, {
+    return jwt.sign({ id: this._id, isAdmin: this.isAdmin }, process.env.JWT_SECRET_KEY, {
         expiresIn: process.env.JWT_EXPIRES
     });
 };

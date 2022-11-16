@@ -68,7 +68,7 @@ exports.createOTP = async (req, res, next) => {
 
 
 //User Registration Receiving OTP
-exports.createUser = async (req, res, next) => {
+exports.createUser = async (req, res) => {
     const { otp, name, password, confirmPassword } = req.body;
     let otpUser = await Otp.findOne({ otp: otp });
     if (!otpUser) {
@@ -111,19 +111,19 @@ exports.userLogin = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-        res.status(400).send("Please Provide Email Or Password");
+        return res.status(400).send("Please Provide Email Or Password");
     }
 
     const user = await User.findOne({ email: email });
     if (!user) {
-        return res.status(200).send("User Not Found!!!");
+        return res.status(400).send("User Not Found!!!");
     }
 
     const isPasswordMatched = await user.comparePassword(password);
 
 
     if (!isPasswordMatched) {
-        return res.send("Password Incorrect!!!");
+        return res.status(401).send("Password Incorrect!!!");
     }
 
     sendToken(user, 201, res);

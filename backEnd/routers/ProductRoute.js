@@ -9,28 +9,28 @@ const {
     getSingleProductReviews,
     deleteReview
 } = require('../controllers/ProductController.js');
-const { authentication, authorizeRole } = require('../Authentication/Authentication.js');
+const { verifyTokenAndAuthorization, verifyTokenAndAdmin } = require('../Authentication/Authentication.js');
 const router = express.Router();
 
 router.route('/create/product')
-    .post(authentication, authorizeRole("admin"), createProduct);
+    .post(verifyTokenAndAuthorization, verifyTokenAndAdmin, createProduct);
 
 router.route('/products')
     .get(getAllProducts);
 
 router.route('/product/:id')
-    .put(authentication, authorizeRole("admin"), updateProduct)
-    .delete(authentication, authorizeRole("admin"), deleteProduct)
+    .put(verifyTokenAndAuthorization, verifyTokenAndAdmin, updateProduct)
+    .delete(verifyTokenAndAuthorization, verifyTokenAndAdmin, deleteProduct)
     .get(getSingleProduct);
 
 router.route('/create/product/review')
-    .post(authentication, createProductReview);
+    .post(verifyTokenAndAuthorization, createProductReview);
 
 router.route('/single/reviews')
     .get(getSingleProductReviews);
 
 router.route('/review/delete')
-    .delete(authentication, authorizeRole("admin"), deleteReview);
+    .delete(verifyTokenAndAuthorization, verifyTokenAndAdmin, deleteReview);
 
 module.exports = router;
 

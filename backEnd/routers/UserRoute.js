@@ -1,5 +1,5 @@
 const express = require('express');
-const { authentication, authorizeRole } = require('../Authentication/Authentication.js');
+const { authentication, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require('../Authentication/Authentication.js');
 const {
     createOTP,
     createUser,
@@ -34,8 +34,8 @@ router.route('/password/forgot')
 router.route('/password/reset/:token')
     .put(resetPassword);
 router.route('/admin/users')
-    .get(authentication, authorizeRole("admin"), getAllUser);
+    .get(authentication, getAllUser);
 router.route('/admin/user/:id')
-    .get(authentication, authorizeRole("admin"), getSingleUser);
+    .get(authentication, getSingleUser);
 
 module.exports = router;
