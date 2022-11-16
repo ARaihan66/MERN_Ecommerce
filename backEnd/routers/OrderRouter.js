@@ -1,22 +1,22 @@
 const express = require('express');
 const router = express.Router();
-const { authentication, authorizeRole } = require('../Authentication/Authentication.js');
+const { verifyTokenAndAuthorization, verifyTokenAndAdmin } = require('../Authentication/Authentication.js');
 const { createOrder, getSingleOrder, getAllOrder, getAdminAllOrder, deleteOrder } = require('../controllers/OrderController.js');
 
 router.route('/create/order')
-    .post(authentication, createOrder);
+    .post(verifyTokenAndAuthorization, createOrder);
 
 router.route('/single/order/:id')
-    .get(authentication, getSingleOrder);
+    .get(verifyTokenAndAuthorization, getSingleOrder);
 
 router.route('/orders/me')
-    .get(authentication, getAllOrder);
+    .get(verifyTokenAndAuthorization, getAllOrder);
 
 router.route('/all/orders')
-    .get(authentication, getAdminAllOrder);
+    .get(verifyTokenAndAuthorization, verifyTokenAndAdmin, getAdminAllOrder);
 
 router.route('/delete/order')
-    .get(authentication, deleteOrder);
+    .get(verifyTokenAndAuthorization, deleteOrder);
 
 
 
