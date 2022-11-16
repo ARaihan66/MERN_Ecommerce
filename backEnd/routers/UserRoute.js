@@ -1,5 +1,5 @@
 const express = require('express');
-const { authentication, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require('../Authentication/Authentication.js');
+const { verifyTokenAndAuthorization, verifyTokenAndAdmin } = require('../Authentication/Authentication.js');
 const {
     createOTP,
     createUser,
@@ -22,20 +22,20 @@ router.route('/registration')
 router.route('/login')
     .post(userLogin);
 router.route('/logout')
-    .get(authentication, userLogout);
+    .get(verifyTokenAndAuthorization, userLogout);
 router.route('/me')
-    .get(authentication, userDetails);
+    .get(verifyTokenAndAuthorization, userDetails);
 router.route('/me/profile/update')
-    .put(authentication, updateProfile);
+    .put(verifyTokenAndAuthorization, updateProfile);
 router.route('/me/password/update')
-    .put(authentication, updatePassword);
+    .put(verifyTokenAndAuthorization, updatePassword);
 router.route('/password/forgot')
     .post(forgetPassword);
 router.route('/password/reset/:token')
     .put(resetPassword);
 router.route('/admin/users')
-    .get(authentication, getAllUser);
+    .get(verifyTokenAndAuthorization, verifyTokenAndAdmin, getAllUser);
 router.route('/admin/user/:id')
-    .get(authentication, getSingleUser);
+    .get(verifyTokenAndAuthorization, verifyTokenAndAdmin, getSingleUser);
 
 module.exports = router;
