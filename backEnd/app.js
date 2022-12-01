@@ -3,16 +3,15 @@ const cookieParser = require('cookie-parser');
 const errorHandler = require("./ErrorHandler/errorHandler");
 const app = express();
 
+
+app.use(express.json());
+app.use(cookieParser());
+
 //Import Route
 const product = require('./routers/ProductRouter.js');
 const user = require('./routers/UserRouter.js')
 const order = require('./routers/OrderRouter.js')
 const cart = require('./routers/CartRouter.js')
-
-
-
-app.use(express.json());
-app.use(cookieParser());
 
 
 app.use('/api/user', user);

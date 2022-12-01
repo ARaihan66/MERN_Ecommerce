@@ -5,7 +5,7 @@ const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
 
 //User Registration Sending OTP
-exports.createOTP = async (req, res, next) => {
+exports.createOTP = async (req, res) => {
     const { email } = req.body;
     let user = await User.findOne({ email: email });
     if (user) {
@@ -74,7 +74,7 @@ exports.createUser = async (req, res) => {
     if (!otpUser) {
         return res.status(400).json({
             success: false,
-            message: "User is not found!!!"
+            message: "Time Expired or Wrong OTP"
         });
     }
 
@@ -152,6 +152,8 @@ exports.userDetails = async (req, res) => {
 // Update password
 exports.updatePassword = async (req, res, next) => {
 
+    const oldPassword = req.user.password;
+
     const user = await User.findById(req.user.id);
 
     if (!user) {
@@ -161,7 +163,7 @@ exports.updatePassword = async (req, res, next) => {
         })
     }
 
-    const isPasswordMatched = user.comparePassword(req.body.oldPassword);
+    const isPasswordMatched = user.comparePassword(oldPassword);
 
     if (!isPasswordMatched) {
         return res.status(401).json({
