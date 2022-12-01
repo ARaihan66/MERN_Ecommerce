@@ -22,11 +22,12 @@ const orderSchema = Schema({
     },
     address: {
         type: Object,
-        default: 'Pending'
+        required: true
+
     },
     status: {
         type: String,
-        required: true
+        default: 'Pending'
     }
 }, { timestamps: true });
 

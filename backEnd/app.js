@@ -4,8 +4,8 @@ const errorHandler = require("./ErrorHandler/errorHandler");
 const app = express();
 
 //Import Route
-const product = require('./routers/ProductRoute.js');
-const user = require('./routers/UserRoute.js')
+const product = require('./routers/ProductRouter.js');
+const user = require('./routers/UserRouter.js')
 const order = require('./routers/OrderRouter.js')
 const cart = require('./routers/CartRouter.js')
 

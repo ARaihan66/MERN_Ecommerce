@@ -32,9 +32,26 @@ exports.getAllProducts = async (req, res) => {
     })
 }
 
+//Get single product details
+exports.getSingleProduct = async (req, res) => {
+    let product = await Product.findById(req.params.id);
+
+    if (!product) {
+        return res.status(500).json({
+            message: 'Product not found with this id'
+        })
+    }
+
+    res.status(200).json({
+        success: true,
+        product: product
+    })
+
+}
+
 //Update product
 exports.updateProduct = async (req, res) => {
-    let product = await Product.findById(req.param.id);
+    let product = await Product.findById(req.params.id);
 
     if (!product) {
         return res.status(500).json({
@@ -42,7 +59,7 @@ exports.updateProduct = async (req, res) => {
             message: 'Product not found this id'
         })
     }
-    product = await Product.findByIdAndUpdate(req.param.id, req.body);
+    product = await Product.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true });
     res.status(200).json({
         success: true,
         product: product
@@ -52,7 +69,7 @@ exports.updateProduct = async (req, res) => {
 //Delete products
 exports.deleteProduct = async (req, res) => {
 
-    let product = await Product.findById(req.param.id);
+    let product = await Product.findById(req.params.id);
 
     if (!product) {
         return res.status(500).json({
@@ -61,7 +78,7 @@ exports.deleteProduct = async (req, res) => {
         })
     }
 
-    product = await Product.findByIdAndDelete(req.param.id);
+    product = await Product.findByIdAndDelete(req.params.id);
     res.status(200).json({
         success: true,
         message: "Product was deleted successfully",
@@ -70,22 +87,6 @@ exports.deleteProduct = async (req, res) => {
 }
 
 
-//Get single product details
-exports.getSingleProduct = async (req, res) => {
-    let product = await Product.findById(req.param.id);
-
-    if (!product) {
-        return res.status(500).json({
-            mwssage: 'Product not found with this id'
-        })
-    }
-
-    res.status(200).json({
-        success: true,
-        product: product
-    })
-
-}
 
 
 //Create new review or update the review
