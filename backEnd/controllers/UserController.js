@@ -3,6 +3,7 @@ const sendToken = require('../Utils/jwtToken');
 const Otp = require('../models/OtpModel');
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
+const { findByIdAndDelete } = require('../models/UserModel.js');
 
 //User Registration Sending OTP
 exports.createOTP = async (req, res) => {
@@ -78,13 +79,6 @@ exports.createUser = async (req, res) => {
         });
     }
 
-    if (password !== confirmPassword) {
-        return res.status(400).json({
-            success: false,
-            message: "Password doesn't mathch!!!"
-        });
-    }
-
     const user = await User.create({
         otp: otp,
         name: name,
@@ -152,7 +146,7 @@ exports.userDetails = async (req, res) => {
 // Update password
 exports.updatePassword = async (req, res, next) => {
 
-    const { oldPassword, newPassword, confirmPassword } = req.user.password;
+    const { oldPassword, newPassword, confirmPassword } = req.body;
 
     const user = await User.findById(req.user.id);
 
@@ -282,6 +276,15 @@ exports.resetPassword = async (req, res) => {
             message: "OTP not match!!!"
         })
     }
+}
+
+// Delete user
+exports.deleteUser = async (req, res) => {
+    await findByIdAndDelete(req.params.id);
+    res.status(200).json({
+        success: true,
+        message: "User has been deleted successfully!!!"
+    })
 }
 
 // Get all user ------ Admin

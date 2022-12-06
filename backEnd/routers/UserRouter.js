@@ -9,6 +9,7 @@ const {
     resetPassword,
     userDetails,
     updatePassword,
+    deleteUser,
     getAllUser,
     getSingleUser
 } = require('../controllers/UserController.js');
@@ -30,6 +31,8 @@ router.route('/password/forgot')
     .post(forgetPassword);
 router.route('/password/reset/:token')
     .put(resetPassword);
+router.route('/delete/user')
+    .delete(deleteUser)
 router.route('/admin/users')
     .get(verifyTokenAndAdmin, getAllUser);
 router.route('/admin/user/:id')
