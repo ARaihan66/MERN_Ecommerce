@@ -58,7 +58,6 @@ transition-duration:0.5s;
 `
 
 const Product = (props) => {
-    console.log(props.item)
     return (
         <Container>
             <Image src={props.item.img} />

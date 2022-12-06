@@ -26,7 +26,8 @@ ${mobile({ paddingTop: '10px' })}
 
 
 
-const Products = () => {
+const Products = ({ cat, filters, sort }) => {
+    console.log(cat, filters, sort);
     return (
         <Container>
             <Title>POLO'S POPULER</Title>
