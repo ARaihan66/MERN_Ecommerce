@@ -1,12 +1,7 @@
 const app = require('./app');
-const dotenv = require('dotenv');
-const databaseConnection = require('../db/Database');
+require('dotenv').config();
+const databaseConnection = require('./db/Database');
 
-
-//config
-dotenv.config({
-    path: 'backEnd/config/.env'
-})
 
 //connect database
 databaseConnection();
