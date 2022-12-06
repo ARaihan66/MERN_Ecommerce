@@ -23,14 +23,6 @@ router.route('/product/:id')
     .delete(verifyTokenAndAuthorization, verifyTokenAndAdmin, deleteProduct)
     .get(getSingleProduct);
 
-router.route('/create/product/review')
-    .post(verifyTokenAndAuthorization, createProductReview);
-
-router.route('/single/reviews')
-    .get(getSingleProductReviews);
-
-router.route('/review/delete')
-    .delete(verifyTokenAndAuthorization, verifyTokenAndAdmin, deleteReview);
 
 module.exports = router;
 

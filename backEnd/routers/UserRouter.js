@@ -32,7 +32,7 @@ router.route('/password/forgot')
 router.route('/password/reset/:token')
     .put(resetPassword);
 router.route('/delete/user')
-    .delete(deleteUser)
+    .delete(verifyTokenAndAuthorization, deleteUser)
 router.route('/admin/users')
     .get(verifyTokenAndAdmin, getAllUser);
 router.route('/admin/user/:id')

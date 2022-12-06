@@ -12,18 +12,24 @@ exports.createProduct = async (req, res, next) => {
 
 //Get all product
 exports.getAllProducts = async (req, res) => {
-    let { page, sort } = req.query;
+    let qNew = req.query.new;
+    let qCategory = req.query.category;
 
-    if (!page) page = 1;
-    const skip = (page - 1) * 3;
+    if (!page) return page = 1;
+    const skip = (page - 1) * 5;
 
-    const products = await Product.find().sort({ [sort]: -1 }).skip(skip).limit(3);
+    let products;
 
-    if (products.length == 0) {
-        return res.status(404).json({
-            success: false,
-            message: "Product is not found!!!"
+    if (qNew) {
+        products = await Product.find().sort({ createdAt: -1 }).limit(5)
+    } else if (qCategory) {
+        products = await Product.find({
+            categories: {
+                $in: [qCategory],
+            }
         })
+    } else {
+        products = await Product.find().sort({ createdAt: -1 }).skip(skip).limit(5);
     }
     res.status(200).json({
         success: true,
@@ -81,120 +87,7 @@ exports.deleteProduct = async (req, res) => {
     product = await Product.findByIdAndDelete(req.params.id);
     res.status(200).json({
         success: true,
-        message: "Product was deleted successfully",
+        message: "Product has been deleted successfully",
         product: product
     })
 }
-
-
-
-
-//Create new review or update the review
-exports.createProductReview = async (req, res, next) => {
-    const { rating, comment, productId } = req.body;
-
-    const review = {
-        user: req.user._id,
-        name: req.user.name,
-        rating: Number(rating),
-        comment,
-    };
-
-    const product = await Product.findById(productId);
-
-    const isReviewed = product.reviews.find(
-        (rev) => rev.user.toString() === req.user._id.toString()
-    );
-
-    if (isReviewed) {
-        product.reviews.forEach((rev) => {
-            if (rev.user.toString() === req.user._id.toString())
-                (rev.rating = rating), (rev.comment = comment);
-        });
-    } else {
-        product.reviews.push(review);
-        product.numOfReviews = product.reviews.length;
-    }
-
-    let avg = 0;
-
-    product.reviews.forEach((rev) => {
-        avg += rev.rating;
-    });
-
-    product.ratings = avg / product.reviews.length;
-
-    await product.save({ validateBeforeSave: false });
-
-    res.status(200).json({
-        success: true,
-        Product: product
-    });
-};
-
-// Get all reviews of a single product
-exports.getSingleProductReviews = async (req, res) => {
-    const product = await Product.findById(req.params.productId);
-
-    if (!product) {
-        return res.status(404).json({
-            message: "Product is not found!!",
-        })
-    }
-
-    res.status(200).json({
-        message: "Successful",
-        product: product
-    })
-}
-
-// Delete review --Admin
-exports.deleteReview = async (req, res) => {
-    const product = await Product.findById(req.params.productId);
-
-    if (!product) {
-        return res.status(404).json({
-            success: false,
-            message: "Product not found"
-        });
-    }
-
-    // const reviews = product.reviews.filter(
-    //     (rev) => rev._id.toString() !== req.params.id.toString()
-    // );
-
-    // let avg = 0;
-
-    // reviews.forEach((rev) => {
-    //     avg += rev.rating;
-    // });
-
-    // let ratings = 0;
-
-    // if (reviews.length === 0) {
-    //     ratings = 0;
-    // } else {
-    //     ratings = avg / reviews.length;
-    // }
-
-    // const numOfReviews = reviews.length;
-
-    await Product.findByIdAndUpdate(
-        req.params.productId,
-        {
-            reviews,
-            ratings,
-            numOfReviews,
-        },
-        {
-            new: true,
-            runValidators: true,
-            useFindAndModify: false,
-        }
-    );
-
-    res.status(200).json({
-        success: true,
-    });
-};
-
