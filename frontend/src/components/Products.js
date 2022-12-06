@@ -3,6 +3,7 @@ import { popularProducts } from './Data';
 import Product from "./Product";
 import { mobile } from "../Responsive";
 import { useEffect, useState } from "react";
+import axios from 'axios';
 
 const Container = styled.div`
 background-color: antiquewhite;
@@ -32,7 +33,15 @@ const Products = ({ cat, filters, sort }) => {
     const [filterProducts, setFilterProducts] = useState([]);
 
     useEffect(() => {
+        const getProducts = async () => {
+            try {
+                const res = await axios.get("http://localhost:5000/api/product/products");
+                console.log(res);
+            } catch (err) {
 
+            }
+        }
+        getProducts();
     }, [cat])
 
     return (

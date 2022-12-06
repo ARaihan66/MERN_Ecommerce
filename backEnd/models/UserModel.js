@@ -10,8 +10,7 @@ const userSchema = Schema({
     name: {
         type: String,
         required: [true, "Please Enter Your Name"],
-        minlength: 3,
-        maxlength: 15,
+        unique: true
     },
     email: {
         type: String,
@@ -24,16 +23,9 @@ const userSchema = Schema({
         maxlenght: [15, "Maximum length of password is 15 charecters"],
         required: [true, "Password is required"]
     },
-    confirmPassword: {
-        type: String
-    },
     isAdmin: {
         type: Boolean,
         default: false,
-    },
-    token: {
-        type: String,
-        default: ''
     }
 
 }, { timestamps: true });

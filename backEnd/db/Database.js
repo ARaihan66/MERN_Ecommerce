@@ -6,7 +6,7 @@ const databaseConnection = () => {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })
-        .then((data) => {
+        .then(() => {
             console.log('Database Connected Successfully!!!')
         }).catch((error) => {
             console.log('Connection Failed!!!')
