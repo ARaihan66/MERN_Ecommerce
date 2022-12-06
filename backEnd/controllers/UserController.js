@@ -69,7 +69,7 @@ exports.createOTP = async (req, res) => {
 
 //User Registration Receiving OTP
 exports.createUser = async (req, res) => {
-    const { otp, name, password, confirmPassword } = req.body;
+    const { otp, name, password } = req.body;
     let otpUser = await Otp.findOne({ otp: otp });
     if (!otpUser) {
         return res.status(400).json({
