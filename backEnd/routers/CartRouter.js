@@ -1,19 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const { addToCart, updateCart, removeCartItem, getCartItem } = require('../controllers/CartController.js');
+const { createCart, updateCart, removeCartItem, userCart, getAllCarts } = require('../controllers/CartController.js');
+const { authentication, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require('../Authentication/Authentication')
 
-router.route('/addToCart')
-    .post(addToCart)
-
-router.route('/items')
-    .get(getCartItem)
+router.route('/create/cart')
+    .post(authentication, createCart)
 
 router.route('/add/update')
-    .put(updateCart)
+    .put(verifyTokenAndAuthorization, updateCart)
 
 router.route('/remove/item')
-    .delete(removeCartItem)
+    .delete(verifyTokenAndAuthorization, removeCartItem)
 
+router.route('/find/:userId')
+    .get(verifyTokenAndAuthorization, userCart)
 
+router.route('/all/carts')
+    .get(verifyTokenAndAdmin, getAllCarts)
 
 module.exports = router;

@@ -1,25 +1,8 @@
 const Cart = require("../models/CartModel");
 
-// Add To Cart
-exports.addToCart = async (req, res, next) => {
-    const {
-        productName,
-        quantity,
-        productImage,
-        productPrice,
-        userId,
-        productId,
-        Stock,
-    } = req.body;
-    const cart = await Cart.create({
-        productName,
-        quantity,
-        productImage,
-        productPrice,
-        userId,
-        productId,
-        Stock,
-    });
+// Create Cart
+exports.createCart = async (req, res) => {
+    const cart = await Cart.create(req.body);
 
     res.status(200).json({
         success: true,
@@ -27,21 +10,11 @@ exports.addToCart = async (req, res, next) => {
     });
 };
 
-// Get Cart Item
-exports.getCartItem = async (req, res, next) => {
-    const cartItem = await Cart.find({ userId: req.user.id });
-    res.status(200).json({
-        success: true,
-        cartItem,
-    });
-};
-
 // Update Cart Item
-exports.updateCart = async (req, res, next) => {
-    const {
-        quantity,
-    } = req.body;
-    const cart = await Cart.findByIdAndUpdate(req.params.id);
+exports.updateCart = async (req, res) => {
+    const cart = await Cart.findByIdAndUpdate(req.params.id, {
+        $set: req.body
+    });
 
     if (!cart) {
         return res.status(404).json({
@@ -63,7 +36,7 @@ exports.removeCartItem = async (req, res, next) => {
     if (!cartItem) {
         return res.status(404).json({
             success: false,
-            message: "No cart item is found with this id"
+            message: "No cart item is found!!!"
         });
     }
 
@@ -72,6 +45,25 @@ exports.removeCartItem = async (req, res, next) => {
     res.status(200).json({
         success: true,
         message: "Item removed from cart",
+    });
+};
+
+// Get User Cart
+exports.userCart = async (req, res) => {
+    const cart = await Cart.findOne({ userId: req.params.userId });
+    res.status(200).json({
+        success: true,
+        Cart: cart
+    })
+}
+
+// Get All Carts ---> Admin
+exports.getAllCarts = async (req, res, next) => {
+    const cartItems = await Cart.find();
+
+    res.status(200).json({
+        success: true,
+        carts: cartItems,
     });
 };
 
