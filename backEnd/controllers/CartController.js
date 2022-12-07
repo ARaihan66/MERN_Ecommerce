@@ -22,10 +22,6 @@ exports.updateCart = async (req, res) => {
             message: "No Cart Item Is Found With This Id"
         });
     }
-
-    await cart.update({
-        quantity,
-    });
 };
 
 

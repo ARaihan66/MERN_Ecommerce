@@ -1,23 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const { verifyTokenAndAuthorization, verifyTokenAndAdmin } = require('../Authentication/Authentication.js');
-const { createOrder, getSingleOrder, getAllOrder, getAdminAllOrder, deleteOrder } = require('../controllers/OrderController.js');
+const { authentication, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require('../Authentication/Authentication.js');
+const { createOrder, updateOrder, removeOrderItem, userOrders, getAllOrders } = require('../controllers/OrderController.js');
+
 
 router.route('/create/order')
-    .post(verifyTokenAndAuthorization, createOrder);
+    .post(authentication, createOrder)
 
-router.route('/single/order/:id')
-    .get(verifyTokenAndAuthorization, getSingleOrder);
+router.route('/add/update')
+    .put(verifyTokenAndAuthorization, updateOrder)
 
-router.route('/orders/me')
-    .get(verifyTokenAndAuthorization, getAllOrder);
+router.route('/remove/item')
+    .delete(verifyTokenAndAuthorization, removeOrderItem)
+
+router.route('/find/:userId')
+    .get(verifyTokenAndAuthorization, userOrders)
 
 router.route('/all/orders')
-    .get(verifyTokenAndAuthorization, verifyTokenAndAdmin, getAdminAllOrder);
-
-router.route('/delete/order')
-    .get(verifyTokenAndAuthorization, deleteOrder);
-
+    .get(verifyTokenAndAdmin, getAllOrders)
 
 
 module.exports = router;
